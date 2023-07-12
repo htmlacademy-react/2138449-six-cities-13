@@ -4,7 +4,8 @@ import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import PrivateRoute from '../private-route/ptivate-rote';
 
 type AppProps = {
   offersCount: number;
@@ -24,7 +25,13 @@ function App({offersCount}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<Favorites />}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.NoAuth}
+            >
+              <Favorites />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.Offer}
