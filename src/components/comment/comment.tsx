@@ -6,6 +6,21 @@ type CommentProps = {
 };
 
 function Comment(): JSX.Element {
+  const [form, setForm] = useState<CommentProps>({ rating: 0, text: '' });
+
+  const ratingChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((prevState) => ({
+      ...prevState,
+      rating: Number(evt.target.value),
+    }));
+  };
+
+  const textChangeHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      text: evt.target.value
+    });
+  };
 
   return (
     <form className="reviews__form form" action="#" method="post"
@@ -18,6 +33,7 @@ function Comment(): JSX.Element {
       </label>
       <div className="reviews__rating-form form__rating">
         <input
+          onChange={ratingChangeHandler}
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={5}
@@ -34,6 +50,7 @@ function Comment(): JSX.Element {
           </svg>
         </label>
         <input
+          onChange={ratingChangeHandler}
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={4}
@@ -50,6 +67,7 @@ function Comment(): JSX.Element {
           </svg>
         </label>
         <input
+          onChange={ratingChangeHandler}
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={3}
@@ -66,6 +84,7 @@ function Comment(): JSX.Element {
           </svg>
         </label>
         <input
+          onChange={ratingChangeHandler}
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={2}
@@ -82,6 +101,7 @@ function Comment(): JSX.Element {
           </svg>
         </label>
         <input
+          onChange={ratingChangeHandler}
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={1}
@@ -99,6 +119,7 @@ function Comment(): JSX.Element {
         </label>
       </div>
       <textarea
+        onChange={textChangeHandler}
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
