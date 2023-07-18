@@ -6,7 +6,7 @@ type MainProps = {
   offersCount: number;
 }
 
-function Main({offersCount}: MainProps): JSX.Element {
+function MainPage({offersCount}: MainProps): JSX.Element {
   return (
     <>
       <Helmet>
@@ -131,4 +131,4 @@ function Main({offersCount}: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default MainPage;

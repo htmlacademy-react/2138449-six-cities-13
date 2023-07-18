@@ -1,7 +1,7 @@
 import Logo from '../../components/logo/logo';
 import {Helmet} from 'react-helmet-async';
 
-function Favorites(): JSX.Element {
+function FavoritesPage(): JSX.Element {
   return (
     <>
       <Helmet>
@@ -226,4 +226,4 @@ function Favorites(): JSX.Element {
   );
 }
 
-export default Favorites;
+export default FavoritesPage;
