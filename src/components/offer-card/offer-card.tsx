@@ -1,15 +1,24 @@
-//import { offers } from '../../mocks/offers';
 import { Offer } from '../../types/offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-type OfferProps = Offer;
+type OfferProps = Offer & {
+  onCardMouseEnter: () => void;
+  onCardMouseLeave: () => void;
+};
 
 function OfferCard(props: OfferProps): JSX.Element {
-  const {id, title, type, price, previewImage, isPremium, rating } = props;
+  const {
+    id, title, type, price, previewImage, isPremium,
+    rating, onCardMouseEnter, onCardMouseLeave
+  } = props;
 
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={onCardMouseEnter}
+      onMouseLeave={onCardMouseLeave}
+    >
       {isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
