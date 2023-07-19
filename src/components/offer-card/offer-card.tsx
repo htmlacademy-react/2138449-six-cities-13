@@ -27,8 +27,8 @@ function OfferCard(props: OfferProps): JSX.Element {
         <Link to={`${AppRoute.Offer}${id}`}>
           <img
             className="place-card__image"
-            src="img/room.jpg"
-            alt={previewImage}
+            src={previewImage}
+            alt="Place image"
             width={260}
             height={200}
           />
