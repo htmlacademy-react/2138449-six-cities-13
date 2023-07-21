@@ -1,14 +1,14 @@
 import React from 'react';
 
 type RatingProps = {
-  ratingChangeHandler: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onRatingChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function Rating({ratingChangeHandler}: RatingProps): JSX.Element {
+function Rating({onRatingChange}: RatingProps): JSX.Element {
   return (
     <div className="reviews__rating-form form__rating">
       <input
-        onChange={ratingChangeHandler}
+        onChange={onRatingChange}
         className="form__rating-input visually-hidden"
         name="rating"
         defaultValue={5}
@@ -25,7 +25,7 @@ function Rating({ratingChangeHandler}: RatingProps): JSX.Element {
         </svg>
       </label>
       <input
-        onChange={ratingChangeHandler}
+        onChange={onRatingChange}
         className="form__rating-input visually-hidden"
         name="rating"
         defaultValue={4}
@@ -42,7 +42,7 @@ function Rating({ratingChangeHandler}: RatingProps): JSX.Element {
         </svg>
       </label>
       <input
-        onChange={ratingChangeHandler}
+        onChange={onRatingChange}
         className="form__rating-input visually-hidden"
         name="rating"
         defaultValue={3}
@@ -59,7 +59,7 @@ function Rating({ratingChangeHandler}: RatingProps): JSX.Element {
         </svg>
       </label>
       <input
-        onChange={ratingChangeHandler}
+        onChange={onRatingChange}
         className="form__rating-input visually-hidden"
         name="rating"
         defaultValue={2}
@@ -76,7 +76,7 @@ function Rating({ratingChangeHandler}: RatingProps): JSX.Element {
         </svg>
       </label>
       <input
-        onChange={ratingChangeHandler}
+        onChange={onRatingChange}
         className="form__rating-input visually-hidden"
         name="rating"
         defaultValue={1}
