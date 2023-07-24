@@ -9,8 +9,8 @@ type OffersProps = {
 }
 
 function OfferPage({offers}: OffersProps): JSX.Element | null{
-  const params = useParams();
-  const offer = offers.find((el) => el.id === params.id);
+  const {id} = useParams();
+  const offer = offers.find((el) => el.id === id);
 
   if (!offer) {
     return null;

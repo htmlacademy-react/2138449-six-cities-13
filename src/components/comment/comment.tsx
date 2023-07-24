@@ -32,7 +32,7 @@ function Comment(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <Rating onRatingChange={ratingChangeHandler}/>
+      <Rating onRatingChange={ratingChangeHandler} />
       <textarea
         onChange={textChangeHandler}
         className="reviews__textarea form__textarea"
