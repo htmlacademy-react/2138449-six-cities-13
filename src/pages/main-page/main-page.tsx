@@ -1,12 +1,14 @@
-import OfferCard from '../../components/offer-card/offer-card';
+import OffersList from '../../components/offers-list/offers-list';
 import Logo from '../../components/logo/logo';
 import {Helmet} from 'react-helmet-async';
+import { Offer } from '../../types/offers';
 
 type MainProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
-function Main({offersCount}: MainProps): JSX.Element {
+function MainPage({offersCount, offers}: MainProps): JSX.Element {
   return (
     <>
       <Helmet>
@@ -112,13 +114,7 @@ function Main({offersCount}: MainProps): JSX.Element {
                     </li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  <OfferCard />
-                  <OfferCard />
-                  <OfferCard />
-                  <OfferCard />
-                  <OfferCard />
-                </div>
+                <OffersList offers={offers}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map" />
@@ -131,4 +127,4 @@ function Main({offersCount}: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default MainPage;

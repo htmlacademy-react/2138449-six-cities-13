@@ -1,21 +1,43 @@
-function OfferCard(): JSX.Element {
+import { Offer } from '../../types/offers';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
+type OfferProps = Offer & {
+  onCardMouseEnter: () => void;
+  onCardMouseLeave: () => void;
+};
+
+function OfferCard(props: OfferProps): JSX.Element {
+  const {
+    id, title, type, price, previewImage, isPremium,
+    rating, onCardMouseEnter, onCardMouseLeave
+  } = props;
+
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={onCardMouseEnter}
+      onMouseLeave={onCardMouseLeave}
+    >
+      {isPremium &&
+      <div className="place-card__mark">
+        <span>Premium</span>
+      </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.Offer}${id}`}>
           <img
             className="place-card__image"
-            src="img/room.jpg"
+            src={previewImage}
             alt="Place image"
             width={260}
             height={200}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€80</b>
+            <b className="place-card__price-value">{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
@@ -34,14 +56,14 @@ function OfferCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{width: `${Math.round(rating) * 100 / 5}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Wood and stone place</a>
+          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">Private room</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

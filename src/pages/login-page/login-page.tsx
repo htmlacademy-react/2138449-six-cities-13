@@ -1,7 +1,7 @@
 import Logo from '../../components/logo/logo';
 import {Helmet} from 'react-helmet-async';
 
-function Login(): JSX.Element {
+function LoginPage(): JSX.Element {
   return (
     <>
       <Helmet>
@@ -61,4 +61,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default LoginPage;
