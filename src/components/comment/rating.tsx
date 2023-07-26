@@ -26,7 +26,6 @@ function Rating({onRatingChange}: RatingProps): JSX.Element {
               value={score}
               id={`${score}-stars`}
               type="radio"
-              //checked={rating === score}
             />
             <label
               htmlFor={`${score}-stars`}
