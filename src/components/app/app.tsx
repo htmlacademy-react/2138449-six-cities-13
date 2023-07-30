@@ -5,6 +5,7 @@ import LoginPage from '../../pages/login-page/login-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/ptivate-rote';
+import { Review } from '../../types/review';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
 import { Offer, City } from '../../types/offers';
@@ -13,9 +14,10 @@ type AppProps = {
   offersCount: number;
   offers: Offer[];
   city: City;
+  reviews: Review[];
 }
 
-function App({offersCount, offers, city}: AppProps): JSX.Element {
+function App({offersCount, offers, city, reviews}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -40,7 +42,7 @@ function App({offersCount, offers, city}: AppProps): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer}:id`}
-            element={<OfferPage offers={offers}/>}
+            element={<OfferPage offers={offers} reviews={reviews} city={city}/>}
           />
           <Route
             path="*"

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import { reviewsMock } from './mocks/reviews-mock';
 import { Settings } from './const';
 import { offers } from './mocks/offers';
 import { city } from './mocks/city';
@@ -15,6 +16,7 @@ root.render(
       offersCount={Settings.offersCount}
       offers={offers}
       city={city}
+      reviews={reviewsMock}
     />
   </React.StrictMode>
 );
