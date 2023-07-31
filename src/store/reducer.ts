@@ -10,7 +10,7 @@ type InitialState = {
 }
 
 const initialState: InitialState = {
-  city: 'Amsterdam',
+  city: 'Paris',
   offers,
   sortOffers: [],
 };
