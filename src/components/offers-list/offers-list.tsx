@@ -3,7 +3,7 @@ import { Offer } from '../../types/offers';
 import classNames from 'classnames';
 
 type OffersListProps = {
-  type: 'cities' | 'near';
+  type: 'cities' | 'near' | 'favorites';
   offers: Offer[];
   onListItemHover?: (id: string) => void;
 }
@@ -17,7 +17,8 @@ function OffersList({type, offers, onListItemHover}: OffersListProps): JSX.Eleme
     'places__list': true,
     'cities__places-list': type === 'cities',
     'near-places__list': type === 'near',
-    'tabs__content': type === 'cities'
+    'tabs__content': type === 'cities',
+    'favorites__places': type === 'favorites',
   });
 
   return (
