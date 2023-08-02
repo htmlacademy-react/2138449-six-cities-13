@@ -9,6 +9,8 @@ type FavoritesProps = {
 }
 
 function FavoritesPage({offers}: FavoritesProps): JSX.Element {
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
   return (
     <>
       <Helmet>
@@ -58,7 +60,7 @@ function FavoritesPage({offers}: FavoritesProps): JSX.Element {
                       </Link>
                     </div>
                   </div>
-                  <OffersList offers={offers} onListItemHover={() => ''} type='favorites'/>
+                  <OffersList offers={favoriteOffers} onListItemHover={() => ''} type='favorites'/>
                 </li>
               </ul>
             </section>
