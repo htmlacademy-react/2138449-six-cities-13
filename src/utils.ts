@@ -26,4 +26,23 @@ const getFormatDate = (date: string): string => {
 
 const getDateTime = (date: string): string => date.split(DATE_TIME_SEPARATOR)[DATE_TIME_INDEX];
 
-export { getFormatDate, getDateTime };
+const filterList = [
+  {
+    name: 'Popular',
+    type: 'popular'
+  },
+  {
+    name: 'Price: low to high',
+    type: 'high'
+  },
+  {
+    name: 'Price: high to low',
+    type: 'low'
+  },
+  {
+    name: 'Top rated first',
+    type: 'top'
+  },
+];
+
+export { getFormatDate, getDateTime, filterList };

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../hooks';
-import { changeCity, sortOffersCity } from '../store/action';
+import { useAppDispatch } from '../../hooks';
+import { changeCity, sortOffersCity } from '../../store/action';
 
 type CityListProps = {
   cities: string[];

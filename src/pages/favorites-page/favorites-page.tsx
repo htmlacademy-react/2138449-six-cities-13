@@ -2,12 +2,15 @@ import Logo from '../../components/logo/logo';
 import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
 import { Offer } from '../../types/offers';
+import { Link } from 'react-router-dom';
 
 type FavoritesProps = {
   offers: Offer[];
 }
 
 function FavoritesPage({offers}: FavoritesProps): JSX.Element {
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
   return (
     <>
       <Helmet>
@@ -48,12 +51,23 @@ function FavoritesPage({offers}: FavoritesProps): JSX.Element {
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <OffersList offers={offers} onListItemHover={() => ''}/>
+              <ul className="favorites__list">
+                <li className="favorites__locations-items">
+                  <div className="favorites__locations locations locations--current">
+                    <div className="locations__item">
+                      <Link className="locations__item-link" to="#">
+                        <span>Amsterdam</span>
+                      </Link>
+                    </div>
+                  </div>
+                  <OffersList offers={favoriteOffers} onListItemHover={() => ''} type='favorites'/>
+                </li>
+              </ul>
             </section>
           </div>
         </main>
         <footer className="footer container">
-          <a className="footer__logo-link" href="main.html">
+          <Link className="footer__logo-link" to="main.html">
             <img
               className="footer__logo"
               src="img/logo.svg"
@@ -61,7 +75,7 @@ function FavoritesPage({offers}: FavoritesProps): JSX.Element {
               width={64}
               height={33}
             />
-          </a>
+          </Link>
         </footer>
       </div>
     </>

@@ -4,9 +4,10 @@ import { Offer, City } from '../../types/offers';
 import { useAppSelector } from '../../hooks';
 import { CitiesList } from '../../const';
 import OffersList from '../../components/offers-list/offers-list';
+import Sorting from '../../components/sorting/sorting';
 import Logo from '../../components/logo/logo';
 import Map from '../../components/map/map';
-import CityList from '../../city-list/city-list';
+import CityList from '../../components/city-list/city-list';
 
 type MainProps = {
   city: City;
@@ -77,32 +78,7 @@ function MainPage({ city }: MainProps): JSX.Element {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{sortOffers.length} places to stay in {activeCity}</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                    <svg className="places__sorting-arrow" width={7} height={4}>
-                      <use xlinkHref="#icon-arrow-select" />
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li
-                      className="places__option places__option--active"
-                      tabIndex={0}
-                    >
-                  Popular
-                    </li>
-                    <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                    </li>
-                    <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                    </li>
-                    <li className="places__option" tabIndex={0}>
-                    Top rated first
-                    </li>
-                  </ul>
-                </form>
+                <Sorting />
                 <OffersList type='cities' offers={sortOffers} onListItemHover={handleListItemHover}/>
               </section>
               <div className="cities__right-section">
@@ -119,3 +95,4 @@ function MainPage({ city }: MainProps): JSX.Element {
 }
 
 export default MainPage;
+
