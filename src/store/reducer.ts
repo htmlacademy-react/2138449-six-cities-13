@@ -1,20 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, sortOffersCity, filterOffer } from './action';
-import { offers } from '../mocks/offers';
-import { Offer } from '../types/offers';
+import { changeCity, sortOffersCity, filterOffer, loadOffers, offersLoadingStatus } from './action';
+import { Offer, City } from '../types/offers';
+import { CitiesMap } from '../const';
 
 type InitialState = {
-  city: string;
+  city: City;
   offers: Offer[];
   sortOffers: Offer[];
   filterOffers: Offer[];
+  loadingStatus: boolean;
 }
 
 const initialState: InitialState = {
-  city: 'Paris',
-  offers,
+  city: CitiesMap.Paris,
+  offers: [],
   sortOffers: [],
-  filterOffers: []
+  filterOffers: [],
+  loadingStatus: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -24,6 +26,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(sortOffersCity, (state, action) => {
       state.sortOffers = state.offers.filter((item) => item.city.name === action.payload);
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(offersLoadingStatus, (state, action) => {
+      state.loadingStatus = action.payload;
     })
     .addCase(filterOffer, (state, action) => {
       switch (action.payload) {
