@@ -37,7 +37,7 @@ const reducer = createReducer(initialState, (builder) => {
           state.filterOffers = state.sortOffers.sort((a, b) => b.rating - a.rating);
           break;
         default:
-          state.filterOffers = state.sortOffers;
+          state.filterOffers = state.sortOffers.slice();
       }
     });
 });
