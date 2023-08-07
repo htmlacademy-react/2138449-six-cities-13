@@ -5,7 +5,7 @@ type Offers = Offer[];
 
 export const changeCity = createAction<City>('changeCity');
 
-export const sortOffersCity = createAction<string>('sortOffersCity');
+export const sortOffersCity = createAction<City>('sortOffersCity');
 
 export const filterOffer = createAction<string>('filterOffer');
 

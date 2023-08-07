@@ -1,19 +1,14 @@
 import { useState } from 'react';
 import {Helmet} from 'react-helmet-async';
-import { Offer, City } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { useAppSelector } from '../../hooks';
-import { CitiesList } from '../../const';
+import CityList from '../../components/city-list/city-list';
 import OffersList from '../../components/offers-list/offers-list';
 import Sorting from '../../components/sorting/sorting';
 import Logo from '../../components/logo/logo';
 import Map from '../../components/map/map';
-import CityList from '../../components/city-list/city-list';
 
-type MainProps = {
-  city: City;
-}
-
-function MainPage({ city }: MainProps): JSX.Element {
+function MainPage(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
@@ -68,8 +63,7 @@ function MainPage({ city }: MainProps): JSX.Element {
           <div className="tabs">
             <section className="locations container">
               <CityList
-                cities={CitiesList}
-                actualCity={activeCity}
+                actualCity={activeCity.name}
               />
             </section>
           </div>
@@ -77,13 +71,13 @@ function MainPage({ city }: MainProps): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{sortOffers.length} places to stay in {activeCity}</b>
+                <b className="places__found">{sortOffers.length} places to stay in {activeCity.name}</b>
                 <Sorting />
                 <OffersList type='cities' offers={sortOffers} onListItemHover={handleListItemHover}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map">
-                  <Map city={city} points={sortOffers} selectedPoint={selectedPoint} />
+                  <Map city={activeCity} points={sortOffers} selectedPoint={selectedPoint} />
                 </section>
               </div>
             </div>

@@ -32,7 +32,26 @@ export const CitiesList = [
   'Dusseldorf'
 ];
 
-export const enum CitiesName {
+export const filterList = [
+  {
+    name: 'Popular',
+    type: 'popular'
+  },
+  {
+    name: 'Price: low to high',
+    type: 'high'
+  },
+  {
+    name: 'Price: high to low',
+    type: 'low'
+  },
+  {
+    name: 'Top rated first',
+    type: 'top'
+  },
+];
+
+export const enum CityName {
   Paris = 'Paris',
   Cologne = 'Cologne',
   Brussels = 'Brussels',
@@ -41,49 +60,49 @@ export const enum CitiesName {
   Dusseldorf ='Dusseldorf'
 }
 
-export const CitiesMap: Record<CitiesName, City> = {
-  [CitiesName.Paris]: {
-    name: CitiesName.Paris,
+export const CityMap: Record<CityName, City> = {
+  [CityName.Paris]: {
+    name: CityName.Paris,
     location: {
       latitude: 48.85661,
       longitude: 2.351499,
       zoom: 13
     }
   },
-  [CitiesName.Cologne]: {
-    name: CitiesName.Cologne,
+  [CityName.Cologne]: {
+    name: CityName.Cologne,
     location: {
       latitude: 50.938361,
       longitude: 6.959974,
       zoom: 13
     }
   },
-  [CitiesName.Brussels]: {
-    name: CitiesName.Brussels,
+  [CityName.Brussels]: {
+    name: CityName.Brussels,
     location: {
       latitude: 50.846557,
       longitude: 4.351697,
       zoom: 13
     }
   },
-  [CitiesName.Amsterdam]: {
-    name: CitiesName.Amsterdam,
+  [CityName.Amsterdam]: {
+    name: CityName.Amsterdam,
     location: {
       latitude: 52.37454,
       longitude: 4.897976,
       zoom: 13
     }
   },
-  [CitiesName.Hamburg]: {
-    name: CitiesName.Hamburg,
+  [CityName.Hamburg]: {
+    name: CityName.Hamburg,
     location: {
       latitude: 53.550341,
       longitude: 10.000654,
       zoom: 13
     }
   },
-  [CitiesName.Dusseldorf]: {
-    name: CitiesName.Dusseldorf,
+  [CityName.Dusseldorf]: {
+    name: CityName.Dusseldorf,
     location: {
       latitude: 51.225402,
       longitude: 6.776314,

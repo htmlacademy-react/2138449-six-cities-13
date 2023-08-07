@@ -3,22 +3,28 @@ import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import OfferPage from '../../pages/offer-page/offer-page';
+import LoadingPage from '../../pages/loading-page/loading-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/ptivate-rote';
 import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
-import { City } from '../../types/offers';
 
 type AppProps = {
-  city: City;
   reviews: Review[];
 }
 
-function App({city, reviews}: AppProps): JSX.Element {
+function App({reviews}: AppProps): JSX.Element {
 
   const offers = useAppSelector((state) => state.offers);
+  const isDataLoading = useAppSelector((state) => state.loadingStatus);
+
+  if (isDataLoading) {
+    return (
+      <LoadingPage />
+    );
+  }
 
   return (
     <HelmetProvider>
@@ -26,7 +32,7 @@ function App({city, reviews}: AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage city={city}/>}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Login}
@@ -44,7 +50,7 @@ function App({city, reviews}: AppProps): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer}:id`}
-            element={<OfferPage offers={offers} reviews={reviews} city={city}/>}
+            element={<OfferPage offers={offers} reviews={reviews} />}
           />
           <Route
             path="*"
