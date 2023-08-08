@@ -4,21 +4,22 @@ import ReviewList from '../../components/review/reviews-list';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
 import { Helmet } from 'react-helmet-async';
-import { Offer, City } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { Review } from '../../types/review';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 
 const NEARBY_OFFERS_COUNT = 3;
 
 type OffersProps = {
  offers: Offer[];
  reviews: Review[];
- city: City;
 }
 
-function OfferPage({offers, reviews, city}: OffersProps): JSX.Element | null{
+function OfferPage({offers, reviews}: OffersProps): JSX.Element | null {
   const {id} = useParams();
   const offer = offers.find((el) => el.id === id);
+  const activeCity = useAppSelector((state) => state.city);
 
   if (!offer) {
     return null;
@@ -195,7 +196,7 @@ function OfferPage({offers, reviews, city}: OffersProps): JSX.Element | null{
               </div>
             </div>
             <section className="offer__map">
-              <Map city={city} points={offers.slice(0, NEARBY_OFFERS_COUNT)} />
+              <Map city={activeCity} points={offers.slice(0, NEARBY_OFFERS_COUNT)} />
             </section>
           </section>
           <div className="container">

@@ -11,6 +11,14 @@ export const enum AppRoute {
   Offer = '/offer/',
 }
 
+export const enum APIRoute {
+  Offers = '/offers',
+  Coments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+  Favorite = '/favorite',
+}
+
 export const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
