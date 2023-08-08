@@ -21,17 +21,17 @@ const initialState: InitialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, action) => {
-      state.city = action.payload;
-    })
-    .addCase(sortOffersCity, (state, action) => {
-      state.sortOffers = state.offers.filter((item) => item.city.name === action.payload.name);
-    })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
     .addCase(offersLoadingStatus, (state, action) => {
       state.loadingStatus = action.payload;
+    })
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
+    })
+    .addCase(sortOffersCity, (state, action) => {
+      state.sortOffers = state.offers.filter((item) => item.city.name === action.payload.name);
     })
     .addCase(filterOffer, (state, action) => {
       switch (action.payload) {
