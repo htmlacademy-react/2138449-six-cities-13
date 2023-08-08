@@ -21,3 +21,16 @@ export type Offer = {
     isPremium: boolean;
     rating: number;
 }
+
+export type DetailedOffer = Offer & {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  images: string[];
+  maxAdults: number;
+ }

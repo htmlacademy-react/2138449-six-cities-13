@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch } from '../../hooks';
 import { filterOffer } from '../../store/action';
-import { filterList } from '../../utils';
+import { filterList } from '../../const';
 
 function Sorting() {
   const [active, setActive] = useState(false);
@@ -35,7 +35,7 @@ function Sorting() {
       </span>
       <ul className={sortingClass}>
         {filterList.map((item, i) => {
-          const keyValue = `${item.name}-${i}`;
+          const keyValue = `${item.name}-${i}`; // тут можно item.type использовать
           return (
             <li
               key={keyValue}
