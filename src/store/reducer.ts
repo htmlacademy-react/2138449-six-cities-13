@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, sortOffersCity, filterOffer, loadOffers, offersLoadingStatus } from './action';
 import { Offer, City } from '../types/offers';
-import { CitiesMap } from '../const';
+import { CityMap } from '../const';
 
 type InitialState = {
   city: City;
@@ -12,7 +12,7 @@ type InitialState = {
 }
 
 const initialState: InitialState = {
-  city: CitiesMap.Paris,
+  city: CityMap.Paris,
   offers: [],
   sortOffers: [],
   filterOffers: [],
@@ -25,7 +25,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.city = action.payload;
     })
     .addCase(sortOffersCity, (state, action) => {
-      state.sortOffers = state.offers.filter((item) => item.city.name === action.payload);
+      state.sortOffers = state.offers.filter((item) => item.city.name === action.payload.name);
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
