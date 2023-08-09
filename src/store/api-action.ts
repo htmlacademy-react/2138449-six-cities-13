@@ -11,8 +11,8 @@ import { AppDispatch, State } from '../types/state';
 import { Offer } from '../types/offers';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { UserData } from '../types/user-data';
-import { saveToken, dropToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
+import { saveToken, dropToken } from '../services/token';
 
 type Offers = Offer[];
 
