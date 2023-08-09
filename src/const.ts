@@ -19,7 +19,7 @@ export const enum APIRoute {
   Favorite = '/favorite',
 }
 
-export const enum AuthorizationStatus {
+export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',

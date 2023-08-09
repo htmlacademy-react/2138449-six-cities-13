@@ -8,7 +8,7 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/ptivate-rote';
 import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
@@ -21,6 +21,7 @@ function App({reviews}: AppProps): JSX.Element {
 
   const offers = useAppSelector((state) => state.offers);
   const isDataLoading = useAppSelector((state) => state.loadingStatus);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (isDataLoading) {
     return (
@@ -44,7 +45,7 @@ function App({reviews}: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
               >
                 <FavoritesPage offers={offers}/>
               </PrivateRoute>

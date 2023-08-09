@@ -1,9 +1,15 @@
+import {
+  offersLoadingStatus,
+  loadOffers,
+  sortOffersCity,
+  requireAuthorization,
+  redirectToRoute
+} from './action';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { Offer } from '../types/offers';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
-import { offersLoadingStatus, loadOffers, sortOffersCity, requireAuthorization } from './action';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
