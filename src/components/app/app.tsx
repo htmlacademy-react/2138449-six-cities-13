@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -10,6 +10,8 @@ import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
+import HistoryRouter from '../history-router/history-router';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   reviews: Review[];
@@ -28,7 +30,7 @@ function App({reviews}: AppProps): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -57,7 +59,7 @@ function App({reviews}: AppProps): JSX.Element {
             element={<NotFoundPage />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
