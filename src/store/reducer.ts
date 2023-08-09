@@ -4,7 +4,7 @@ import {
   filterOffer,
   loadOffers,
   offersLoadingStatus,
-  requireAuthorization
+  requireAuthorization,
 } from './action';
 import { createReducer } from '@reduxjs/toolkit';
 import { Offer, City } from '../types/offers';

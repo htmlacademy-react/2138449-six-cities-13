@@ -3,7 +3,7 @@ import {
   loadOffers,
   sortOffersCity,
   requireAuthorization,
-  redirectToRoute
+  redirectToRoute,
 } from './action';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';

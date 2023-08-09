@@ -26,5 +26,4 @@ const getFormatDate = (date: string): string => {
 
 const getDateTime = (date: string): string => date.split(DATE_TIME_SEPARATOR)[DATE_TIME_INDEX];
 
-
 export { getFormatDate, getDateTime };
