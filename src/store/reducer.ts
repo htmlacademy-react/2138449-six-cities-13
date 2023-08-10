@@ -5,10 +5,17 @@ import {
   loadOffers,
   offersLoadingStatus,
   requireAuthorization,
+  loadOffersDetails,
+  loadNearPlaces,
+  loadReviews
 } from './action';
 import { createReducer } from '@reduxjs/toolkit';
-import { Offer, City } from '../types/offers';
+import { Offer, City, DetailedOffer } from '../types/offers';
+import { Review } from '../types/review';
 import { CityMap, AuthorizationStatus } from '../const';
+
+type Offers = Offer[];
+type Reviews = Review[];
 
 type InitialState = {
   city: City;
@@ -17,6 +24,9 @@ type InitialState = {
   filterOffers: Offer[];
   loadingStatus: boolean;
   authorizationStatus: AuthorizationStatus;
+  actualOffer: DetailedOffer | null;
+  reviews: Reviews;
+  offersNearby: Offers;
 }
 
 const initialState: InitialState = {
@@ -26,6 +36,9 @@ const initialState: InitialState = {
   filterOffers: [],
   loadingStatus: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  actualOffer: null,
+  reviews: [],
+  offersNearby: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -38,6 +51,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(loadOffersDetails, (state, action) => {
+      state.actualOffer = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(loadNearPlaces, (state, action) => {
+      state.offersNearby = action.payload;
     })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;

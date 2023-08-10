@@ -6,8 +6,8 @@ type User = {
 
 export type Review = {
   id: string;
-  date: string;
-  user: User;
   comment: string;
+  date: string;
   rating: number;
+  user: User;
 }
