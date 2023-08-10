@@ -1,15 +1,8 @@
 import Header from '../../components/header/header';
-import OffersList from '../../components/offers-list/offers-list';
-import { Offer } from '../../types/offers';
 import {Helmet} from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
-type FavoritesProps = {
-  offers: Offer[];
-}
-
-function FavoritesPage({offers}: FavoritesProps): JSX.Element {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+function FavoritesPage(): JSX.Element {
 
   return (
     <>
@@ -31,7 +24,6 @@ function FavoritesPage({offers}: FavoritesProps): JSX.Element {
                       </Link>
                     </div>
                   </div>
-                  <OffersList offers={favoriteOffers} onListItemHover={() => ''} type='favorites'/>
                 </li>
               </ul>
             </section>

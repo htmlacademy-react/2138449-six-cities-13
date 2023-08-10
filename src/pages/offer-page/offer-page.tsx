@@ -2,24 +2,23 @@ import Header from '../../components/header/header';
 import Comment from '../../components/comment/comment';
 import ReviewList from '../../components/review/reviews-list';
 import OffersList from '../../components/offers-list/offers-list';
+import { loadDetails } from '../../store/api-action';
 import Map from '../../components/map/map';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/offers';
-import { Review } from '../../types/review';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useEffect } from 'react';
 
-const NEARBY_OFFERS_COUNT = 3;
-
-type OffersProps = {
- offers: Offer[];
- reviews: Review[];
-}
-
-function OfferPage({offers, reviews}: OffersProps): JSX.Element | null {
+function OfferPage(): JSX.Element | null {
   const {id} = useParams();
-  const offer = offers.find((el) => el.id === id);
-  const activeCity = useAppSelector((state) => state.city);
+  const offer = useAppSelector((state) => state.actualOffer);
+  const reviews = useAppSelector((state) => state.reviews);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadDetails(id as string));
+  }, [dispatch, id]);
 
   if (!offer) {
     return null;
@@ -167,7 +166,7 @@ function OfferPage({offers, reviews}: OffersProps): JSX.Element | null {
               </div>
             </div>
             <section className="offer__map">
-              <Map city={activeCity} points={offers.slice(0, NEARBY_OFFERS_COUNT)} />
+              <Map city={offer.city} points={offersNearby} />
             </section>
           </section>
           <div className="container">
@@ -175,7 +174,7 @@ function OfferPage({offers, reviews}: OffersProps): JSX.Element | null {
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <OffersList type='near' offers={offers.slice(0, NEARBY_OFFERS_COUNT)} />
+              <OffersList type='near' offers={offersNearby} />
             </section>
           </div>
         </main>

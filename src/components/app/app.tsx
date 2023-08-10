@@ -7,19 +7,12 @@ import LoadingPage from '../../pages/loading-page/loading-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/ptivate-rote';
 import { useAppSelector } from '../../hooks';
-import { Review } from '../../types/review';
 import { AppRoute } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
-type AppProps = {
-  reviews: Review[];
-}
-
-function App({reviews}: AppProps): JSX.Element {
-
-  const offers = useAppSelector((state) => state.offers);
+function App(): JSX.Element {
   const isDataLoading = useAppSelector((state) => state.loadingStatus);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
@@ -47,13 +40,13 @@ function App({reviews}: AppProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <FavoritesPage offers={offers}/>
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route
             path={`${AppRoute.Offer}:id`}
-            element={<OfferPage offers={offers} reviews={reviews} />}
+            element={<OfferPage />}
           />
           <Route
             path="*"
