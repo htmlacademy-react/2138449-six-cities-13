@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -8,8 +8,10 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/ptivate-rote';
 import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
+import HistoryRouter from '../history-router/history-router';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   reviews: Review[];
@@ -19,6 +21,7 @@ function App({reviews}: AppProps): JSX.Element {
 
   const offers = useAppSelector((state) => state.offers);
   const isDataLoading = useAppSelector((state) => state.loadingStatus);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (isDataLoading) {
     return (
@@ -28,7 +31,7 @@ function App({reviews}: AppProps): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -42,7 +45,7 @@ function App({reviews}: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
               >
                 <FavoritesPage offers={offers}/>
               </PrivateRoute>
@@ -57,7 +60,7 @@ function App({reviews}: AppProps): JSX.Element {
             element={<NotFoundPage />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
