@@ -4,7 +4,7 @@ export const enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/',
+  Offer = '/offer',
 }
 
 export const enum APIRoute {
@@ -15,17 +15,15 @@ export const enum APIRoute {
   Favorite = '/favorite',
 }
 
-export enum AuthorizationStatus {
+export const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
 
-export const URL_MARKER_DEFAULT =
-  './markup/img/pin.svg';
+export const URL_MARKER_DEFAULT = './markup/img/pin.svg';
 
-export const URL_MARKER_CURRENT =
-  './markup/img/pin-active.svg';
+export const URL_MARKER_CURRENT = './markup/img/pin-active.svg';
 
 export const CitiesList = [
   'Paris',
