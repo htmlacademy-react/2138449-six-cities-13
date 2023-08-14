@@ -2,6 +2,8 @@ import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} fro
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
+import browserHistory from '../browser-history';
+import { AppRoute } from '../const';
 
 const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -44,6 +46,10 @@ export const createAPI = (): AxiosInstance => {
         const detailMessage = (error.response.data);
 
         toast.warn(detailMessage.message);
+      }
+
+      if (error.response?.status === StatusCodes.NOT_FOUND) {
+        browserHistory.push(AppRoute.NotFound);
       }
 
       throw error;

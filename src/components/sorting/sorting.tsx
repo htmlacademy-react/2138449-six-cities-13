@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import { useAppDispatch } from '../../hooks';
-import { filterOffer } from '../../store/action';
 import { filterList } from '../../const';
 
-function Sorting() {
+type SortingProps = {
+  onChange: (newSort: string) => void;
+}
+
+function Sorting({onChange}: SortingProps) {
   const [active, setActive] = useState(false);
   const [actualFilter, setActualFilter] = useState('Popular');
-
-  const dispatch = useAppDispatch();
 
   const sortingClass = classNames({
     'places__options': true,
@@ -47,7 +47,7 @@ function Sorting() {
               onClick={() => {
                 setActualFilter(item.name);
                 setActive((prev) => !prev);
-                dispatch(filterOffer(item.type));
+                onChange(item.type);
               }}
             >{item.name}
             </li>

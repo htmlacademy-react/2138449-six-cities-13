@@ -1,18 +1,19 @@
 import {
   changeCity,
-  sortOffersCity,
-  filterOffer,
   loadOffers,
   offersLoadingStatus,
   requireAuthorization,
   loadOffersDetails,
   loadNearPlaces,
-  loadReviews
+  loadReviews,
+  addReview,
+  dropSendStatus,
 } from './action';
+import { postReview } from './api-action';
 import { createReducer } from '@reduxjs/toolkit';
 import { Offer, City, DetailedOffer } from '../types/offers';
 import { Review } from '../types/review';
-import { CityMap, AuthorizationStatus } from '../const';
+import { CityMap, AuthorizationStatus, RequestStatus } from '../const';
 
 type Offers = Offer[];
 type Reviews = Review[];
@@ -27,6 +28,7 @@ type InitialState = {
   actualOffer: DetailedOffer | null;
   reviews: Reviews;
   offersNearby: Offers;
+  sendingReviewStatus: string;
 }
 
 const initialState: InitialState = {
@@ -39,6 +41,7 @@ const initialState: InitialState = {
   actualOffer: null,
   reviews: [],
   offersNearby: [],
+  sendingReviewStatus: RequestStatus.Unsent,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -58,29 +61,26 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
     })
+    .addCase(postReview.pending, (state) => {
+      state.sendingReviewStatus = RequestStatus.Pending;
+    })
+    .addCase(postReview.fulfilled, (state) => {
+      state.sendingReviewStatus = RequestStatus.Success;
+    })
+    .addCase(postReview.rejected, (state) => {
+      state.sendingReviewStatus = RequestStatus.Error;
+    })
+    .addCase(dropSendStatus, (state) => {
+      state.sendingReviewStatus = RequestStatus.Unsent;
+    })
+    .addCase(addReview, (state, action) => {
+      state.reviews.push(action.payload);
+    })
     .addCase(loadNearPlaces, (state, action) => {
       state.offersNearby = action.payload;
     })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
-    })
-    .addCase(sortOffersCity, (state, action) => {
-      state.sortOffers = state.offers.filter((item) => item.city.name === action.payload.name);
-    })
-    .addCase(filterOffer, (state, action) => {
-      switch (action.payload) {
-        case 'high':
-          state.filterOffers = state.sortOffers.sort((a, b) => a.price - b.price);
-          break;
-        case 'low':
-          state.filterOffers = state.sortOffers.sort((a, b) => b.price - a.price);
-          break;
-        case 'top':
-          state.filterOffers = state.sortOffers.sort((a, b) => b.rating - a.rating);
-          break;
-        default:
-          state.filterOffers = state.sortOffers.slice();
-      }
     });
 });
 

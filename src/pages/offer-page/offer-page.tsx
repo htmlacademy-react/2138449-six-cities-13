@@ -1,19 +1,19 @@
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
+import { loadDetails } from '../../store/api-action';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import Header from '../../components/header/header';
 import Comment from '../../components/comment/comment';
 import ReviewList from '../../components/review/reviews-list';
 import OffersList from '../../components/offers-list/offers-list';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
-import { loadDetails } from '../../store/api-action';
-import Map from '../../components/map/map';
-import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../hooks';
-import { useEffect } from 'react';
-import LoadingPage from '../loading-page/loading-page';
-import { AuthorizationStatus } from '../../const';
+import Loader from '../../components/loader/loader';
 import DetailedOfferPage from '../../components/detailed-offer/detailde-offer';
+import Map from '../../components/map/map';
+import { AuthorizationStatus } from '../../const';
 
-function OfferPage(): JSX.Element | null {
+function OfferPage(): JSX.Element {
   const {id: offerId} = useParams();
   const isDataLoading = useAppSelector((state) => state.loadingStatus);
   const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -30,7 +30,7 @@ function OfferPage(): JSX.Element | null {
 
   if (isDataLoading) {
     return (
-      <LoadingPage />
+      <Loader />
     );
   }
 
@@ -58,13 +58,19 @@ function OfferPage(): JSX.Element | null {
           </div>
         </div>
         <section className="offer__map">
-          <Map city={offer.city} points={offersNearby} />
+          <Map
+            city={offer.city}
+            points={offersNearby}
+          />
         </section>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OffersList type='near' offers={offersNearby} />
+          <OffersList
+            type='near'
+            offers={offersNearby}
+          />
         </section>
       </div>
     </main>}
