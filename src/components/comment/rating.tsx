@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment, ChangeEvent } from 'react';
 
 const ratingMap = {
   '5': 'perfect',
@@ -9,10 +9,12 @@ const ratingMap = {
 };
 
 type RatingProps = {
-  onRatingChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onRatingChange: (evt: ChangeEvent<HTMLInputElement>) => void;
+  disabled: boolean; // не булиан? возможно тут надо передать isSubmit?
 };
 
-function Rating({onRatingChange}: RatingProps): JSX.Element {
+function Rating({onRatingChange, disabled}: RatingProps): JSX.Element {
+
   return (
     <div className="reviews__rating-form form__rating">
       {Object.entries(ratingMap)
@@ -21,6 +23,7 @@ function Rating({onRatingChange}: RatingProps): JSX.Element {
           <Fragment key={score}>
             <input
               onChange={onRatingChange}
+              disabled={disabled}
               className="form__rating-input visually-hidden"
               name="rating"
               value={score}

@@ -1,5 +1,8 @@
 import { City } from './types/offers';
 
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+
 export const enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -9,7 +12,7 @@ export const enum AppRoute {
 
 export const enum APIRoute {
   Offers = '/offers',
-  Coments = '/comments',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
   Favorite = '/favorite',
@@ -114,3 +117,10 @@ export const CityMap: Record<CityName, City> = {
 } as const;
 
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export const enum RequestStatus {
+  Unsent = 'UNSENT',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Error = 'ERROR'
+}
