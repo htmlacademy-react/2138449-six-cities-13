@@ -22,7 +22,6 @@ function App(): JSX.Element {
     );
   }
 
-  // HelmetProvider лишний?
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>

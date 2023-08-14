@@ -16,7 +16,7 @@ import DetailedOfferPage from '../../components/detailed-offer/detailde-offer';
 function OfferPage(): JSX.Element | null {
   const {id: offerId} = useParams();
   const isDataLoading = useAppSelector((state) => state.loadingStatus);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const offer = useAppSelector((state) => state.actualOffer);
   const reviews = useAppSelector((state) => state.reviews);
   const offersNearby = useAppSelector((state) => state.offersNearby);
@@ -42,36 +42,32 @@ function OfferPage(): JSX.Element | null {
       <div className="page">
         <Header />
         {!isDataLoading && offer &&
-          <main className="page__main page__main--offer">
-            <section className="offer"></section>
-          <OfferGallery offer={offer} />
-            <div className="offer__container container">
-              <div className="offer__wrapper">
-          <DetailedOfferPage offer={offer} />
-                <section className="offer__reviews reviews">
-                  <ReviewList reviews={reviews}/>
-                  {authorizationStatus === AuthorizationStatus.Auth
-                    <Comment offerId={offerId as string} />
-                  }
-                </section>
-              </div>
-            </div>
+    <main className="page__main page__main--offer">
+      <section className="offer">
+        <OfferGallery offer={offer} />
 
-            <section className="offer__map">
-              <Map city={offer.city} points={offersNearby} />
-            </section>
-          </section>
+        <div className="offer__container container">
+          <div className="offer__wrapper">
+            <DetailedOfferPage offer={offer} />
+            <section className="offer__reviews reviews">
+              <ReviewList reviews={reviews} />
 
-          <div className="container">
-            <section className="near-places places">
-
-              <h2 className="near-places__title">
-                Other places in the neighbourhood
-              </h2>
-              <OffersList type='near' offers={offersNearby} />
+              {isAuthorizationStatus === AuthorizationStatus.Auth &&
+              <Comment offerId={offerId as string} />}
             </section>
           </div>
-        </main>}
+        </div>
+        <section className="offer__map">
+          <Map city={offer.city} points={offersNearby} />
+        </section>
+      </section>
+      <div className="container">
+        <section className="near-places places">
+          <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          <OffersList type='near' offers={offersNearby} />
+        </section>
+      </div>
+    </main>}
       </div>
     </>
   );
