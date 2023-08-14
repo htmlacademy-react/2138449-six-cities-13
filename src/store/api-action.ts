@@ -1,9 +1,10 @@
 import {
   offersLoadingStatus,
+  offersDetailsLoadingStatus,
   loadOffers,
+  loadOffersDetails,
   requireAuthorization,
   redirectToRoute,
-  loadOffersDetails,
   loadNearPlaces,
   loadReviews,
   addReview
@@ -21,23 +22,6 @@ import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 type Offers = Offer[];
 type Reviews = Review[];
 
-export const loadDetails = createAsyncThunk<void, string, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>('loadDetails',
-  async (id, {dispatch, extra: api}) => {
-    dispatch(offersLoadingStatus(true));
-    const {data: dataOffer} = await api.get<DetailedOffer>(`${APIRoute.Offers}/${id}`);
-    const {data: dataReviews} = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
-    const {data: dataOfferNearby} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(offersLoadingStatus(false));
-    dispatch(loadOffersDetails(dataOffer));
-    dispatch(loadReviews(dataReviews));
-    dispatch(loadNearPlaces(dataOfferNearby));
-  });
-
-
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -46,8 +30,25 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api}) => {
     dispatch(offersLoadingStatus(true));
     const { data } = await api.get<Offers>(APIRoute.Offers);
-    dispatch(offersLoadingStatus(false));
     dispatch(loadOffers(data));
+    dispatch(offersLoadingStatus(false));
+  });
+
+export const fetchOfferDetailsAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>('fetchOfferDetails',
+  async (id, {dispatch, extra: api}) => {
+    dispatch(offersDetailsLoadingStatus(true));
+    const {data: dataOffer} = await api.get<DetailedOffer>(`${APIRoute.Offers}/${id}`);
+    const {data: dataReviews} = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
+    const {data: dataOfferNearby} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
+
+    dispatch(loadOffersDetails(dataOffer));
+    dispatch(loadReviews(dataReviews));
+    dispatch(loadNearPlaces(dataOfferNearby));
+    dispatch(offersDetailsLoadingStatus(false));
   });
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {

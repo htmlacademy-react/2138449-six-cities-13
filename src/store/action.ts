@@ -8,7 +8,7 @@ type Reviews = Review[];
 
 export const changeCity = createAction<City>('changeCity');
 
-export const filterOffer = createAction<string>('filterOffer');
+//export const filterOffer = createAction<string>('filterOffer');
 
 export const loadOffers = createAction<Offers>('loadOffers');
 
@@ -19,6 +19,8 @@ export const loadReviews = createAction<Reviews>('loadReviews');
 export const loadNearPlaces = createAction<Offers>('loadNearPlaces');
 
 export const offersLoadingStatus = createAction<boolean>('offersLoadingStatus');
+
+export const offersDetailsLoadingStatus = createAction<boolean>('offersDetailsLoadingStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
 

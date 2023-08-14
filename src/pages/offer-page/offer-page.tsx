@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { loadDetails } from '../../store/api-action';
+import { fetchOfferDetailsAction } from '../../store/api-action';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import Header from '../../components/header/header';
 import Comment from '../../components/comment/comment';
@@ -24,7 +24,7 @@ function OfferPage(): JSX.Element {
 
   useEffect(() => {
     if(offerId) {
-      dispatch(loadDetails(offerId));
+      dispatch(fetchOfferDetailsAction(offerId));
     }
   }, [dispatch, offerId]);
 

@@ -2,6 +2,7 @@ import {
   changeCity,
   loadOffers,
   offersLoadingStatus,
+  offersDetailsLoadingStatus,
   requireAuthorization,
   loadOffersDetails,
   loadNearPlaces,
@@ -24,6 +25,7 @@ type InitialState = {
   sortOffers: Offer[];
   filterOffers: Offer[];
   loadingStatus: boolean;
+  offersDetailsLoadingStatus: boolean;
   authorizationStatus: AuthorizationStatus;
   actualOffer: DetailedOffer | null;
   reviews: Reviews;
@@ -37,6 +39,7 @@ const initialState: InitialState = {
   sortOffers: [],
   filterOffers: [],
   loadingStatus: false,
+  offersDetailsLoadingStatus: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   actualOffer: null,
   reviews: [],
@@ -48,6 +51,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(offersLoadingStatus, (state, action) => {
       state.loadingStatus = action.payload;
+    })
+    .addCase(offersDetailsLoadingStatus, (state, action) => {
+      state.offersDetailsLoadingStatus = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
