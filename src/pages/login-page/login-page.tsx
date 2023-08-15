@@ -6,13 +6,12 @@ import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-action';
 
 function LoginPage(): JSX.Element {
-
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) =>{
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
@@ -38,11 +37,17 @@ function LoginPage(): JSX.Element {
             </div>
           </div>
         </header>
+
         <main className="page__main page__main--login">
           <div className="page__login-container container">
             <section className="login">
               <h1 className="login__title">Sign in</h1>
-              <form className="login__form form" action="#" onSubmit={handleSubmit}>
+              <form
+                className="login__form form"
+                action="#"
+                method="post"
+                onSubmit={handleSubmit}
+              >
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">E-mail</label>
                   <input

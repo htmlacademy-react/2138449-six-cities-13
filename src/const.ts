@@ -1,35 +1,33 @@
 import { City } from './types/offers';
 
-export const enum Settings {
-  offersCount = 300
-}
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
 
 export const enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/',
+  NotFound = '/not-found-screen',
 }
 
 export const enum APIRoute {
   Offers = '/offers',
-  Coments = '/comments',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
   Favorite = '/favorite',
 }
 
-export enum AuthorizationStatus {
+export const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
 
-export const URL_MARKER_DEFAULT =
-  './markup/img/pin.svg';
+export const URL_MARKER_DEFAULT = './markup/img/pin.svg';
 
-export const URL_MARKER_CURRENT =
-  './markup/img/pin-active.svg';
+export const URL_MARKER_CURRENT = './markup/img/pin-active.svg';
 
 export const CitiesList = [
   'Paris',
@@ -120,3 +118,10 @@ export const CityMap: Record<CityName, City> = {
 } as const;
 
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export const enum RequestStatus {
+  Unsent = 'UNSENT',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Error = 'ERROR'
+}

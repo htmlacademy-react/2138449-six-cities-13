@@ -7,6 +7,7 @@ import OffersList from '../../components/offers-list/offers-list';
 import Sorting from '../../components/sorting/sorting';
 import Map from '../../components/map/map';
 import Header from '../../components/header/header';
+import { sortingList } from '../../utils';
 
 function MainPage(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
@@ -14,7 +15,12 @@ function MainPage(): JSX.Element {
   );
 
   const activeCity = useAppSelector((state) => state.city);
-  const sortOffers = useAppSelector((state) => state.sortOffers);
+  const offers = useAppSelector((state) => state.offers);
+  const [currentSort, setCurrenSort] = useState('popular');
+
+  const sortOffers = offers
+    .slice()
+    .filter((item) => item.city.name === activeCity.name);
 
   const handleListItemHover = (id: string) => {
     const currentPoint = sortOffers.find((point) => point.id === id);
@@ -43,12 +49,23 @@ function MainPage(): JSX.Element {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{sortOffers.length} places to stay in {activeCity.name}</b>
-                <Sorting />
-                <OffersList type='cities' offers={sortOffers} onListItemHover={handleListItemHover}/>
+                <Sorting
+                  onChange={(newSort) => setCurrenSort(newSort)}
+                />
+
+                <OffersList
+                  type='cities'
+                  offers={sortingList[currentSort](sortOffers)}
+                  onListItemHover={handleListItemHover}
+                />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map">
-                  <Map city={activeCity} points={sortOffers} selectedPoint={selectedPoint} />
+                  <Map
+                    city={activeCity}
+                    points={sortOffers}
+                    selectedPoint={selectedPoint}
+                  />
                 </section>
               </div>
             </div>
