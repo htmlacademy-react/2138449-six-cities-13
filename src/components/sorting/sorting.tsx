@@ -35,7 +35,7 @@ function Sorting({onChange}: SortingProps) {
       </span>
       <ul className={sortingClass}>
         {filterList.map((item, i) => {
-          const keyValue = `${item.name}-${i}`; // тут можно item.type использовать
+          const keyValue = `${item.name}-${i}`;
           return (
             <li
               key={keyValue}

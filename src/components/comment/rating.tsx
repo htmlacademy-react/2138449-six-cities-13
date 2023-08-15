@@ -10,7 +10,7 @@ const ratingMap = {
 
 type RatingProps = {
   onRatingChange: (evt: ChangeEvent<HTMLInputElement>) => void;
-  disabled: boolean; // не булиан? возможно тут надо передать isSubmit?
+  disabled: boolean;
 };
 
 function Rating({onRatingChange, disabled}: RatingProps): JSX.Element {
