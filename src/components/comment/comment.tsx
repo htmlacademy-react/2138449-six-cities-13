@@ -14,7 +14,6 @@ type CommentProps = {
 function Comment({offerId}: CommentProps): JSX.Element {
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
-
   const [isSubmit, setIsSubmit] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -35,7 +34,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
 
   const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(postReview({reviewData: {comment, rating: +rating}, offerId}));
+    dispatch(postReview({reviewData: {comment, rating: Number(rating)}, offerId}));
   };
 
   useEffect(() => {
@@ -65,7 +64,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
       </label>
 
       {sendStatus === RequestStatus.Error &&
-        <p>Комментарий не отправлен</p>}
+        <p>Комментарий не отправлен, попробуйте ещё раз</p>}
 
       <Rating onRatingChange={ratingChangeHandler} disabled={isSubmit} />
 
@@ -84,7 +83,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe
           your stay with at least{' '}
-          <b className="reviews__text-amount">50 characters</b>.
+          <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"

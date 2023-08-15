@@ -17,9 +17,11 @@ function OfferPage(): JSX.Element {
   const {id: offerId} = useParams();
   const isDataLoading = useAppSelector((state) => state.loadingStatus);
   const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const offer = useAppSelector((state) => state.actualOffer);
   const reviews = useAppSelector((state) => state.reviews);
   const offersNearby = useAppSelector((state) => state.offersNearby);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
