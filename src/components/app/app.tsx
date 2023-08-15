@@ -13,6 +13,7 @@ import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   const isDataLoading = useAppSelector((state) => state.loadingStatus);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
@@ -36,7 +37,7 @@ function App(): JSX.Element {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <FavoritesPage />
+                <FavoritesPage offers={offers} />
               </PrivateRoute>
             }
           />

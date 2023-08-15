@@ -26,7 +26,8 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
-}>('fetchOffers',
+}>(
+  'fetchOffers',
   async (_arg, { dispatch, extra: api}) => {
     dispatch(offersLoadingStatus(true));
     const { data } = await api.get<Offers>(APIRoute.Offers);
@@ -38,13 +39,13 @@ export const fetchOfferDetailsAction = createAsyncThunk<void, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
-}>('fetchOfferDetails',
+}>(
+  'fetchOfferDetails',
   async (id, {dispatch, extra: api}) => {
     dispatch(offersDetailsLoadingStatus(true));
     const {data: dataOffer} = await api.get<DetailedOffer>(`${APIRoute.Offers}/${id}`);
     const {data: dataReviews} = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
     const {data: dataOfferNearby} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
-
     dispatch(loadOffersDetails(dataOffer));
     dispatch(loadReviews(dataReviews));
     dispatch(loadNearPlaces(dataOfferNearby));
@@ -55,7 +56,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
-}>('checkAuth',
+}>(
+  'checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     await api.get(APIRoute.Login)
       .then(() => dispatch(requireAuthorization(AuthorizationStatus.Auth)))
@@ -66,7 +68,8 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
-}>('login',
+}>(
+  'login',
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
@@ -82,7 +85,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(redirectToRoute(AppRoute.Login));
   },
 );
 
