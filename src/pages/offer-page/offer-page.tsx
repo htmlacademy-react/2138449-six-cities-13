@@ -9,7 +9,7 @@ import ReviewList from '../../components/review/reviews-list';
 import OffersList from '../../components/offers-list/offers-list';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import Loader from '../../components/loader/loader';
-import DetailedOfferPage from '../../components/detailed-offer/detailde-offer';
+import DetailedOfferPage from '../../components/detailed-offer/detaild-offer';
 import Map from '../../components/map/map';
 import { AuthorizationStatus } from '../../const';
 
