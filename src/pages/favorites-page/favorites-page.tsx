@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CityMap } from '../../const';
 import { Offer } from '../../types/offers';
 import OffersList from '../../components/offers-list/offers-list';
+import { AppRoute } from '../../const';
 
 type FavoritesProps = {
   offers: Offer[];
@@ -49,7 +50,7 @@ function FavoritesPage({offers}: FavoritesProps): JSX.Element {
         </main>
 
         <footer className="footer container">
-          <Link className="footer__logo-link" to="main.html">
+          <Link className="footer__logo-link" to={AppRoute.Main}>
             <img
               className="footer__logo"
               src="img/logo.svg"
