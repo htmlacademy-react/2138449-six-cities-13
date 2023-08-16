@@ -71,10 +71,13 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
+    const {data, status} = await api.post<UserData>(APIRoute.Login, {email, password});
+
+    if (status >= 200 && status < 300) {
+      saveToken(data.token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
   });
 
 export const logoutAction = createAsyncThunk<void, undefined, {
