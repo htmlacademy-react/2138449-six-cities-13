@@ -17,12 +17,9 @@ import { getAuthorizationStatus } from '../../store/user-data/selectors';
 function App(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
 
-  //const isDataLoading = useAppSelector((state) => state.loadingStatus);
-  //const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isDataLoading = useAppSelector(getFetchingStatusOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  //if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading === RequestStatus.Pending) {
     return (
       <LoadingPage />

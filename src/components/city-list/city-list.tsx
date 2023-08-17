@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-//import { changeCity } from '../../store/action';
 import { setActiveCity } from '../../store/offers-data/offers-data';
 import { CityMap } from '../../const';
 
@@ -27,7 +26,6 @@ function CityList({actualCity}: CityListProps): JSX.Element {
               to="#"
               onClick={(evt) => {
                 evt.preventDefault();
-                //dispatch(changeCity(city));
                 dispatch(setActiveCity(city));
               }}
             >

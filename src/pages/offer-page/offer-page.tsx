@@ -13,22 +13,18 @@ import DetailedOfferPage from '../../components/detailed-offer/detaild-offer';
 import Map from '../../components/map/map';
 import { AuthorizationStatus, RequestStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
-import { getOffer } from '../../store/offer-data/selectors';
+import { getDetailedOffer } from '../../store/detailed-offer-data/selectors';
 import { getReviews } from '../../store/reviews-data/selectors';
 import { getNearbyOffers } from '../../store/nearby-data/selectors';
-import { getFetchingStatusOffer } from '../../store/offer-data/selectors';
+import { getFetchingStatusOffer } from '../../store/detailed-offer-data/selectors';
 
 function OfferPage(): JSX.Element {
   const {id: offerId} = useParams();
-  //const isDataLoading = useAppSelector((state) => state.loadingStatus);
-  //const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const isDataLoading = useAppSelector(getFetchingStatusOffer);
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  //const offer = useAppSelector((state) => state.actualOffer);
-  //const reviews = useAppSelector((state) => state.reviews);
-  //const offersNearby = useAppSelector((state) => state.offersNearby);
-  const offer = useAppSelector(getOffer);
+  const offer = useAppSelector(getDetailedOffer);
   const reviews = useAppSelector(getReviews);
   const offersNearby = useAppSelector(getNearbyOffers);
 
@@ -55,7 +51,7 @@ function OfferPage(): JSX.Element {
       </Helmet>
       <div className="page">
         <Header />
-        {!isDataLoading === RequestStatus.Pending && offer &&
+        {isDataLoading === RequestStatus.Success && offer &&
     <main className="page__main page__main--offer">
       <section className="offer">
         <OfferGallery offer={offer} />

@@ -1,7 +1,6 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { postReview } from '../../store/api-action';
 import { RequestStatus } from '../../const';
-//import { dropSendStatus } from '../../store/action';
 import { getSendingStatusReview } from '../../store/reviews-data/selectors';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import Rating from './rating';
@@ -18,7 +17,6 @@ function Comment({offerId}: CommentProps): JSX.Element {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const dispatch = useAppDispatch();
-  //const sendStatus = useAppSelector((state) => state.sendingReviewStatus);
   const sendStatus = useAppSelector(getSendingStatusReview);
 
   const isValid =
@@ -44,7 +42,6 @@ function Comment({offerId}: CommentProps): JSX.Element {
       case RequestStatus.Success:
         setComment('');
         setRating('');
-        //dispatch(dropSendStatus());
         break;
       case RequestStatus.Pending:
         setIsSubmit(true);

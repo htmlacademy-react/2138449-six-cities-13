@@ -15,8 +15,7 @@ function MainPage(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
-  //const activeCity = useAppSelector((state) => state.city);
-  //const offers = useAppSelector((state) => state.offers);
+
   const activeCity = useAppSelector(getActiveCity);
   const offers = useAppSelector(getOffers);
   const [currentSort, setCurrenSort] = useState('popular');
