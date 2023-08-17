@@ -9,20 +9,23 @@ import Map from '../../components/map/map';
 import Header from '../../components/header/header';
 import MainEmptyPage from './main-empty-page';
 import { sortingList } from '../../utils';
+import { getOffers, getActiveCity } from '../../store/offers-data/selectors';
 
 function MainPage(): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
-  const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  //const activeCity = useAppSelector((state) => state.city);
+  //const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
   const [currentSort, setCurrenSort] = useState('popular');
 
   const sortOffers = offers
     .slice()
     .filter((item) => item.city.name === activeCity.name);
 
-  const handleListItemHover = (id: string | undefined) => {
+  const handleListItemHover = (id: string | null) => {
     if (!id) {
       setSelectedPoint(undefined);
     }

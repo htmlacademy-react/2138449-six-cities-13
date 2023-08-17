@@ -5,11 +5,15 @@ import classNames from 'classnames';
 type OffersListProps = {
   type: 'cities' | 'near' | 'favorites';
   offers: Offer[];
-  onListItemHover?: (id: string) => void;
+  onListItemHover?: (id: string | null) => void;
 }
 
 function OffersList({type, offers, onListItemHover}: OffersListProps): JSX.Element {
-  const handleCardHover = (id: string) => {
+  const handleCardMouseEnter = (id: string | null) => {
+    onListItemHover?.(id);
+  };
+
+  const handleCardMouseLeave = (id: string | null) => {
     onListItemHover?.(id);
   };
 
@@ -27,7 +31,8 @@ function OffersList({type, offers, onListItemHover}: OffersListProps): JSX.Eleme
         <OfferCard
           key={offer.id}
           {...offer}
-          handleCardHover={() => handleCardHover(offer.id)}
+          onCardMouseEnter={() => handleCardMouseEnter(offer.id)}
+          onCardMouseLeave={() => handleCardMouseLeave(null)}
         />)
       )}
     </div>

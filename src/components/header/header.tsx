@@ -3,9 +3,11 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { logoutAction } from '../../store/api-action';
 import Logo from '../logo/logo';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
 function Header(): JSX.Element {
-  const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  //const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 

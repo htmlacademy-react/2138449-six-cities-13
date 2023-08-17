@@ -7,17 +7,23 @@ import LoadingPage from '../../pages/loading-page/loading-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/ptivate-rote';
 import { useAppSelector } from '../../hooks';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, RequestStatus } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
+import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
 function App(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
-  const isDataLoading = useAppSelector((state) => state.loadingStatus);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
+  //const isDataLoading = useAppSelector((state) => state.loadingStatus);
+  //const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isDataLoading = useAppSelector(getFetchingStatusOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  //if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading === RequestStatus.Pending) {
     return (
       <LoadingPage />
     );

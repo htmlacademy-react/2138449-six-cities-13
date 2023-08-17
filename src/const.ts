@@ -125,3 +125,12 @@ export const enum RequestStatus {
   Success = 'SUCCESS',
   Error = 'ERROR'
 }
+
+export const enum NameSpace {
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  NearPlaces = 'NEAR_PLACES',
+  Reviews = 'REVIEWS',
+  Favorites = 'FAVORITES',
+  User = 'USER'
+}
