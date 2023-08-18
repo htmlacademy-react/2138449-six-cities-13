@@ -1,29 +1,37 @@
-import { Offer } from '../../types/offers';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import classNames from 'classnames';
 import { AppRoute } from '../../const';
+import { Offer } from '../../types/offers';
+import BookmarkButton from '../bookmark-button/bookmark-button';
 
 type OfferProps = Offer & {
-  onCardMouseEnter: () => void;
-  onCardMouseLeave: () => void;
+  onCardHover?: (id: string | null) => void;
+  favorite?: boolean;
 };
 
 function OfferCard(props: OfferProps): JSX.Element {
   const {
     id, title, type, price, previewImage, isPremium,
-    rating, onCardMouseEnter, onCardMouseLeave
+    rating, isFavorite, onCardHover, favorite = false
   } = props;
+  const [activeFavorite, setActiveFavorite] = useState(isFavorite);
 
   const handleCardMouseEnter = () => {
-    onCardMouseEnter();
+    onCardHover?.(id);
   };
 
   const handleCardMouseLeave = () => {
-    onCardMouseLeave();
+    onCardHover?.(null);
   };
 
   return (
     <article
-      className="cities__card place-card"
+      className={classNames({
+        'place-card': true,
+        'cities__card': !favorite,
+        'favorites__card': favorite
+      })}
       onMouseEnter={handleCardMouseEnter}
       onMouseLeave={handleCardMouseLeave}
     >
@@ -31,7 +39,13 @@ function OfferCard(props: OfferProps): JSX.Element {
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div
+        className={classNames({
+          'place-card__image-wrapper': true,
+          'cities__image-wrapper': !favorite,
+          'favorites__image-wrapper': favorite
+        })}
+      >
         <Link to={`${AppRoute.Offer}${id}`}>
           <img
             className="place-card__image"
@@ -48,19 +62,11 @@ function OfferCard(props: OfferProps): JSX.Element {
             <b className="place-card__price-value">{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
-            type="button"
-          >
-            <svg
-              className="place-card__bookmark-icon"
-              width={18}
-              height={19}
-            >
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <BookmarkButton
+            id={id}
+            isFavorite={activeFavorite}
+            onClick={() => setActiveFavorite((prev) => !prev)}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

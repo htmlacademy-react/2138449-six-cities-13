@@ -4,10 +4,13 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { logoutAction } from '../../store/api-action';
 import Logo from '../logo/logo';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
+import { getUser } from '../../store/user-data/selectors';
+import { getFavorites } from '../../store/favorites-data/favorites-data/selectors';
 
 function Header(): JSX.Element {
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
-
+  const user = useAppSelector(getUser);
+  const favorites = useAppSelector(getFavorites);
   const dispatch = useAppDispatch();
 
   return (
@@ -29,8 +32,8 @@ function Header(): JSX.Element {
                     >
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__user-name user__name">{user?.email}</span>
+                      <span className="header__favorite-count">{favorites.length}</span>
                     </Link>
                   </li>
 

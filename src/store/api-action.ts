@@ -6,7 +6,7 @@ import { ReviewData, Review } from '../types/review';
 import { AuthorizedUser } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, AppRoute, NameSpace } from '../const';
+import { APIRoute, AppRoute, NameSpace, FavoriteStatus } from '../const';
 import { redirectToRoute } from './action';
 
 type Offers = Offer[];
@@ -115,6 +115,45 @@ export const fetchOfferNearbyAction = createAsyncThunk<Offers, Offer['id'], {
   `${NameSpace.NearPlaces}/fetchNearPlace`,
   async (id, {extra: api}) => {
     const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
+
+    return data;
+  }
+);
+
+export const fetchFavoritesAction = createAsyncThunk<Offers, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Favorites}/fetchFavorites`,
+  async (_arg, {extra: api}) => {
+    const { data } = await api.get<Offers>(APIRoute.Favorite);
+
+    return data;
+  }
+);
+
+export const addFavorite = createAsyncThunk<Offer, Offer['id'], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Favorites}/addFavorite`,
+  async (id, {extra: api}) => {
+    const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Add}`);
+
+    return data;
+  }
+);
+
+export const deleteFavorite = createAsyncThunk<Offer, Offer['id'], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Favorites}/deleteFavorite`,
+  async (id, {extra: api}) => {
+    const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Delete}`);
 
     return data;
   }
