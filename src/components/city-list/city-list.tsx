@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { setActiveCity } from '../../store/offers-data/offers-data';
@@ -47,4 +48,4 @@ function CityList({actualCity}: CityListProps): JSX.Element {
   );
 }
 
-export default CityList;
+export const CityListMemo = memo(CityList);
