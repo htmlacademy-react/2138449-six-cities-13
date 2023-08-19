@@ -17,6 +17,7 @@ export const enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Favorite = '/favorite',
+  Error = 'ERROR',
 }
 
 export const enum AuthorizationStatus {

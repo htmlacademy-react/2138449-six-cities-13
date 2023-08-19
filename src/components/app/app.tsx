@@ -13,9 +13,10 @@ import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
+import { getOffers } from '../../store/offers-data/selectors';
 
 function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
 
   const isDataLoading = useAppSelector(getFetchingStatusOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
