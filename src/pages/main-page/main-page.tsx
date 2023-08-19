@@ -32,7 +32,7 @@ function MainPage(): JSX.Element {
       setSelectedPoint(undefined);
     }
 
-    const currentPoint = sortOffers.find((point) => point.id === id);
+    const currentPoint = sortOffers.find((sortOffer) => sortOffer.id === id);
     setSelectedPoint(currentPoint);
   };
 
