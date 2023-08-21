@@ -37,4 +37,9 @@ const sortingList: Record<string, (offers: Offers) => Offers> = {
   top: (offers: Offers) => offers.slice().sort((a: Offer, b: Offer) => b.rating - a.rating),
 };
 
-export { getFormatDate, getDateTime, sortingList };
+const capitalizedString = (string: string) =>
+  `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+
+//offer.type.charAt(0).toUpperCase() + offer.type.slice(1)
+
+export { getFormatDate, getDateTime, sortingList, capitalizedString };

@@ -9,9 +9,9 @@ import Loader from '../../components/loader/loader';
 import Header from '../../components/header/header';
 import FavoritesOffers from '../../components/favorites-offers/favorite-offers';
 import FavoritesOffersEmpty from '../../components/favorites-offers/favorite-offers-empty';
-import OffersList from '../../components/offers-list/offers-list';
+//import OffersList from '../../components/offers-list/offers-list';
 import { fetchFavoritesAction } from '../../store/api-action';
-import { CityMap } from '../../const';
+//import { CityMap } from '../../const';
 import { Offer } from '../../types/offers';
 import { AppRoute, RequestStatus } from '../../const';
 
