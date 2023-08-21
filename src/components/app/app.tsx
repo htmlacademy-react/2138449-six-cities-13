@@ -3,29 +3,17 @@ import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import OfferPage from '../../pages/offer-page/offer-page';
-import LoadingPage from '../../pages/loading-page/loading-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/ptivate-rote';
 import { useAppSelector } from '../../hooks';
-import { AppRoute, AuthorizationStatus, RequestStatus } from '../../const';
+import { AppRoute } from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
-import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
 
 function App(): JSX.Element {
-  const offers = useAppSelector(getOffers);
-
-  const isDataLoading = useAppSelector(getFetchingStatusOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading === RequestStatus.Pending) {
-    return (
-      <LoadingPage />
-    );
-  }
 
   return (
     <HelmetProvider>
@@ -41,7 +29,7 @@ function App(): JSX.Element {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <FavoritesPage offers={offers} />
+                <FavoritesPage />
               </PrivateRoute>
             }
           />

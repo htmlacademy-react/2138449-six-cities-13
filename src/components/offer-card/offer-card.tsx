@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import classNames from 'classnames';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
@@ -65,6 +65,7 @@ function OfferCard(props: OfferProps): JSX.Element {
           <BookmarkButton
             id={id}
             isFavorite={activeFavorite}
+            type='place-card'
             onClick={() => setActiveFavorite((prev) => !prev)}
           />
         </div>

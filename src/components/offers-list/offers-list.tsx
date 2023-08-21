@@ -1,6 +1,7 @@
-import OfferCard from '../offer-card/offer-card';
 import { Offer } from '../../types/offers';
+import { memo } from 'react';
 import classNames from 'classnames';
+import OfferCardMemo from '../offer-card/offer-card';
 
 type OffersListProps = {
   type: 'cities' | 'near' | 'favorites';
@@ -19,7 +20,7 @@ function OffersList({type, offers, onListItemHover}: OffersListProps): JSX.Eleme
   return (
     <div className={offerListClass}>
       {offers.map((offer) => (
-        <OfferCard
+        <OfferCardMemo
           key={offer.id}
           {...offer}
           onCardHover={onListItemHover}
@@ -29,4 +30,4 @@ function OffersList({type, offers, onListItemHover}: OffersListProps): JSX.Eleme
   );
 }
 
-export default OffersList;
+export const OffersListMemo = memo(OffersList);
