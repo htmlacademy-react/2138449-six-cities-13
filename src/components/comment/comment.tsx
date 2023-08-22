@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 import { postReview } from '../../store/api-action';
 import { getSendingStatusReview } from '../../store/reviews-data/selectors';
+import { dropSendingStatusReview } from '../../store/reviews-data/reviews-data';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import Rating from './rating';
 import { Offer } from '../../types/offers';
@@ -22,7 +23,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
-    rating !== '';
+    rating;
 
   const ratingChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setRating(evt.target.value);
@@ -45,6 +46,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
         case RequestStatus.Success:
           setComment('');
           setRating('');
+          dispatch(dropSendingStatusReview());
           break;
         case RequestStatus.Pending:
           setIsSubmit(true);
