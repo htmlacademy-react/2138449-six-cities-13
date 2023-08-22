@@ -1,11 +1,11 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import { toast } from 'react-toastify';
 import { postReview } from '../../store/api-action';
-import { RequestStatus } from '../../const';
-import { dropSendStatus } from '../../store/action';
+import { getSendingStatusReview } from '../../store/reviews-data/selectors';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import Rating from './rating';
 import { Offer } from '../../types/offers';
-import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
+import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus } from '../../const';
 
 type CommentProps = {
   offerId: Offer['id'];
@@ -14,11 +14,10 @@ type CommentProps = {
 function Comment({offerId}: CommentProps): JSX.Element {
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
-
   const [isSubmit, setIsSubmit] = useState(false);
 
   const dispatch = useAppDispatch();
-  const sendStatus = useAppSelector((state) => state.sendingReviewStatus);
+  const sendStatus = useAppSelector(getSendingStatusReview);
 
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
@@ -35,22 +34,33 @@ function Comment({offerId}: CommentProps): JSX.Element {
 
   const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(postReview({reviewData: {comment, rating: +rating}, offerId}));
+    dispatch(postReview({reviewData: {comment, rating: Number(rating)}, offerId}));
   };
 
   useEffect(() => {
-    switch (sendStatus) {
-      case RequestStatus.Success:
-        setComment('');
-        setRating('');
-        dispatch(dropSendStatus());
-        break;
-      case RequestStatus.Pending:
-        setIsSubmit(true);
-        break;
-      default:
-        setIsSubmit(false);
+    let isMounted = true;
+
+    if (isMounted) {
+      switch (sendStatus) {
+        case RequestStatus.Success:
+          setComment('');
+          setRating('');
+          break;
+        case RequestStatus.Pending:
+          setIsSubmit(true);
+          break;
+        case RequestStatus.Error:
+          toast.warn('Комментарий не отправлен');
+          setIsSubmit(false);
+          break;
+        default:
+          setIsSubmit(false);
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [sendStatus, dispatch]);
 
   return (
@@ -63,9 +73,6 @@ function Comment({offerId}: CommentProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-
-      {sendStatus === RequestStatus.Error &&
-        <p>Комментарий не отправлен</p>}
 
       <Rating onRatingChange={ratingChangeHandler} disabled={isSubmit} />
 
@@ -84,7 +91,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe
           your stay with at least{' '}
-          <b className="reviews__text-amount">50 characters</b>.
+          <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"

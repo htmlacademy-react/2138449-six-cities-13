@@ -1,0 +1,67 @@
+import { useState, useCallback, useMemo } from 'react';
+import { PlaceSortMemo } from '../sorting/sorting';
+import { OffersListMemo } from '../offers-list/offers-list';
+import Map from '../map/map';
+import { Offer, City } from '../../types/offers';
+import { sortingList } from '../../utils';
+
+type Offers = Offer[];
+type CitiesProps = {
+  offers: Offers;
+  activeCity: City;
+}
+
+function Cities({offers, activeCity}: CitiesProps) {
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
+    undefined
+  );
+  const [currentSort, setCurrenSort] = useState('popular');
+
+  const sortByCity = useMemo(
+    () => offers.slice().filter((item) => item.city.name === activeCity.name),
+    [activeCity.name, offers]);
+
+  const sortByCategory = useMemo(
+    () => sortingList[currentSort](sortByCity),
+    [currentSort, sortByCity]);
+
+
+  const handleListItemHover = useCallback((id: string | null) => {
+    const currentPoint = sortByCity.find((item) => item.id === id);
+
+    setSelectedPoint(currentPoint);
+  }, [sortByCity]);
+
+  const handleChangeSort = useCallback((newSort: string) => {
+    setCurrenSort(newSort);
+  }, []);
+
+  return (
+    <div className="cities">
+      <div className="cities__places-container container">
+        <section className="cities__places places">
+          <h2 className="visually-hidden">Places</h2>
+          <b className="places__found">{sortByCity.length} place{sortByCity.length > 1 && 's'} to stay in {activeCity.name}</b>
+          <PlaceSortMemo onChange={handleChangeSort} />
+
+          <OffersListMemo
+            type='cities'
+            offers={sortByCategory}
+            onListItemHover={handleListItemHover}
+          />
+        </section>
+        <div className="cities__right-section">
+          <section className="cities__map">
+            <Map
+              city={activeCity}
+              points={sortByCity}
+              selectedPoint={selectedPoint}
+            />
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Cities;

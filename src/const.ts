@@ -1,5 +1,7 @@
 import { City } from './types/offers';
 
+export const CLOSE_MESSAGE_DELAY = 300;
+
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
 
@@ -17,6 +19,7 @@ export const enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Favorite = '/favorite',
+  Error = 'ERROR',
 }
 
 export const enum AuthorizationStatus {
@@ -124,4 +127,19 @@ export const enum RequestStatus {
   Pending = 'PENDING',
   Success = 'SUCCESS',
   Error = 'ERROR'
+}
+
+export const enum NameSpace {
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  NearPlaces = 'NEAR_PLACES',
+  Reviews = 'REVIEWS',
+  Favorites = 'FAVORITES',
+  User = 'USER'
+}
+
+
+export const enum FavoriteStatus {
+  Add = 1,
+  Delete = 0
 }

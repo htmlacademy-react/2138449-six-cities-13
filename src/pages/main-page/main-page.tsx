@@ -1,75 +1,54 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import {Helmet} from 'react-helmet-async';
-import { Offer } from '../../types/offers';
-import { useAppSelector } from '../../hooks';
-import CityList from '../../components/city-list/city-list';
-import OffersList from '../../components/offers-list/offers-list';
-import Sorting from '../../components/sorting/sorting';
-import Map from '../../components/map/map';
+import classNames from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getOffers, getActiveCity } from '../../store/offers-data/selectors';
+import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-action';
+import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
 import Header from '../../components/header/header';
-import { sortingList } from '../../utils';
+import Loader from '../../components/loader/loader';
+import Cities from '../../components/cities/cities';
+import CitiesEmpty from '../../components/cities/cities-empty';
+import { CityListMemo } from '../../components/city-list/city-list';
+import { RequestStatus, AuthorizationStatus } from '../../const';
 
 function MainPage(): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
-    undefined
-  );
+  const activeCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
+  const isDataLoading = useAppSelector(getFetchingStatusOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isEmpty = offers.length === 0;
+  const dispatch = useAppDispatch();
 
-  const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  const [currentSort, setCurrenSort] = useState('popular');
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+    dispatch(fetchFavoritesAction());
+  }, [dispatch]);
 
-  const sortOffers = offers
-    .slice()
-    .filter((item) => item.city.name === activeCity.name);
-
-  const handleListItemHover = (id: string) => {
-    const currentPoint = sortOffers.find((point) => point.id === id);
-
-    setSelectedPoint(currentPoint);
-  };
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading === RequestStatus.Pending) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
+
       <div className="page page--gray page--main">
         <Header />
-        <main className="page__main page__main--index">
-          <h1 className="visually-hidden">Cities</h1>
-          <div className="tabs">
-            <section className="locations container">
-              <CityList
-                actualCity={activeCity.name}
-              />
-            </section>
-          </div>
-          <div className="cities">
-            <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{sortOffers.length} places to stay in {activeCity.name}</b>
-                <Sorting
-                  onChange={(newSort) => setCurrenSort(newSort)}
-                />
+        <main className={classNames({
+          'page__main page__main--index': true,
+          'page__main--index-empty': isEmpty
+        })}
+        >
 
-                <OffersList
-                  type='cities'
-                  offers={sortingList[currentSort](sortOffers)}
-                  onListItemHover={handleListItemHover}
-                />
-              </section>
-              <div className="cities__right-section">
-                <section className="cities__map">
-                  <Map
-                    city={activeCity}
-                    points={sortOffers}
-                    selectedPoint={selectedPoint}
-                  />
-                </section>
-              </div>
-            </div>
-          </div>
+          <CityListMemo activeCity={activeCity.name} />
+
+          {isEmpty ? <CitiesEmpty /> : <Cities offers={offers} activeCity={activeCity} />}
         </main>
       </div>
     </>
