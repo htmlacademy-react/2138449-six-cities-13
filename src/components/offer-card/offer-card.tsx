@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useState, memo } from 'react';
 import classNames from 'classnames';
-import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 import BookmarkButton from '../bookmark-button/bookmark-button';
+import { AppRoute } from '../../const';
+import { capitalizedString } from '../../utils';
 
 type OfferProps = Offer & {
   onCardHover?: (id: string | null) => void;
@@ -78,10 +79,10 @@ function OfferCard(props: OfferProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizedString(type)}</p>
       </div>
     </article>
   );
 }
 
-export default OfferCard;
+export const OfferCardMemo = memo(OfferCard);

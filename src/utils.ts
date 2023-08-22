@@ -1,4 +1,5 @@
 import { Offer } from './types/offers';
+import { City } from './types/offers';
 
 type Offers = Offer[];
 
@@ -22,10 +23,10 @@ const getFormatDate = (date: string): string => {
   ];
 
   const currentDate = new Date(date);
-  const currentDay = currentDate.getDate();
   const currentMonth = months[currentDate.getMonth()];
+  const currentYear = currentDate.getFullYear();
 
-  return `${currentDay < 10 ? '0' : ''}${currentDay} ${currentMonth}`;
+  return `${currentMonth} ${currentYear}`;
 };
 
 const getDateTime = (date: string): string => date.split(DATE_TIME_SEPARATOR)[DATE_TIME_INDEX];
@@ -40,6 +41,12 @@ const sortingList: Record<string, (offers: Offers) => Offers> = {
 const capitalizedString = (string: string) =>
   `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 
-//offer.type.charAt(0).toUpperCase() + offer.type.slice(1)
+const getRandomCity = (obj: Record<string, City>) => {
+  const keys = Object.keys(obj);
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  return obj[randomKey];
+};
 
-export { getFormatDate, getDateTime, sortingList, capitalizedString };
+const replaceUrl = (url: string) => url.replace(/\/offer\/.*$/, '/offer/');
+
+export { getFormatDate, getDateTime, sortingList, capitalizedString, getRandomCity, replaceUrl };

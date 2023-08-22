@@ -1,11 +1,12 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import { toast } from 'react-toastify';
 import { postReview } from '../../store/api-action';
-import { RequestStatus } from '../../const';
 import { getSendingStatusReview } from '../../store/reviews-data/selectors';
+//import { dropSendingStatusReview } from '../../store/reviews-data/reviews-data';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import Rating from './rating';
 import { Offer } from '../../types/offers';
-import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
+import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus } from '../../const';
 
 type CommentProps = {
   offerId: Offer['id'];
@@ -23,6 +24,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
     rating !== '';
+    //rating тут ничего не надо?
 
   const ratingChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setRating(evt.target.value);
@@ -38,17 +40,30 @@ function Comment({offerId}: CommentProps): JSX.Element {
   };
 
   useEffect(() => {
-    switch (sendStatus) {
-      case RequestStatus.Success:
-        setComment('');
-        setRating('');
-        break;
-      case RequestStatus.Pending:
-        setIsSubmit(true);
-        break;
-      default:
-        setIsSubmit(false);
+    let isMounted = true;
+
+    if (isMounted) {
+      switch (sendStatus) {
+        case RequestStatus.Success:
+          setComment('');
+          setRating('');
+          //dispatch(dropSendingStatusReview());
+          break;
+        case RequestStatus.Pending:
+          setIsSubmit(true);
+          break;
+        case RequestStatus.Error:
+          toast.warn('Комментарий не отправлен');
+          setIsSubmit(false);
+          break;
+        default:
+          setIsSubmit(false);
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [sendStatus, dispatch]);
 
   return (
@@ -61,9 +76,6 @@ function Comment({offerId}: CommentProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-
-      {sendStatus === RequestStatus.Error &&
-        <p>Комментарий не отправлен, попробуйте ещё раз</p>}
 
       <Rating onRatingChange={ratingChangeHandler} disabled={isSubmit} />
 

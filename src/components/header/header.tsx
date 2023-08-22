@@ -7,7 +7,11 @@ import { getAuthorizationStatus } from '../../store/user-data/selectors';
 import { getUser } from '../../store/user-data/selectors';
 import { getFavorites } from '../../store/favorites-data/favorites-data/selectors';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  login?: boolean;
+}
+
+function Header({login = false}: HeaderProps): JSX.Element {
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
   const favorites = useAppSelector(getFavorites);
@@ -20,6 +24,8 @@ function Header(): JSX.Element {
           <div className="header__left">
             <Logo />
           </div>
+
+          {!login &&
           <nav className="header__nav">
             <ul className="header__nav-list">
               {isAuthorizationStatus === AuthorizationStatus.Auth
@@ -60,7 +66,8 @@ function Header(): JSX.Element {
                   </Link>
                 </li>}
             </ul>
-          </nav>
+          </nav>}
+
         </div>
       </div>
     </header>

@@ -1,7 +1,7 @@
 import { Offer } from '../../types/offers';
 import { memo } from 'react';
 import classNames from 'classnames';
-import OfferCardMemo from '../offer-card/offer-card';
+import { OfferCardMemo } from '../offer-card/offer-card';
 
 type OffersListProps = {
   type: 'cities' | 'near' | 'favorites';

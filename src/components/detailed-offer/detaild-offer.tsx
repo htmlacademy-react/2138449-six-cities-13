@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import classNames from 'classnames';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import { DetailedOffer } from '../../types/offers';
 import { capitalizedString } from '../../utils';

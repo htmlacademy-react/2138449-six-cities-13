@@ -29,7 +29,7 @@ export const favoritesData = createSlice({
       })
       .addCase(deleteFavorite.fulfilled, (state, action) => {
         const updateOffer = action.payload;
-        state.favorites = state.favorites.filter((offer) => offer.id !== updateOffer.id);
+        state.favorites = state.favorites.filter(({id}) => id !== updateOffer.id);
       });
   },
 });

@@ -9,9 +9,7 @@ import Loader from '../../components/loader/loader';
 import Header from '../../components/header/header';
 import FavoritesOffers from '../../components/favorites-offers/favorite-offers';
 import FavoritesOffersEmpty from '../../components/favorites-offers/favorite-offers-empty';
-//import OffersList from '../../components/offers-list/offers-list';
 import { fetchFavoritesAction } from '../../store/api-action';
-//import { CityMap } from '../../const';
 import { Offer } from '../../types/offers';
 import { AppRoute, RequestStatus } from '../../const';
 
@@ -50,14 +48,10 @@ function FavoritesPage(): JSX.Element {
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
-      <div className="page">
+      <div className={classNames('page', {['page--favorites-empty']: isEmpty})}>
         <Header />
-        <main
-          className={classNames({
-            'page__main page__main--favorites': true,
-            'page__main--favorites-empty': isEmpty
-          })}
-        >
+
+        <main className={classNames('page__main', 'page__main--favorites', {['page__main--favorites-empty']: isEmpty})}>
           {isEmpty ? <FavoritesOffersEmpty /> : <FavoritesOffers offers={Object.entries(favoriteByCity)} />}
         </main>
 
