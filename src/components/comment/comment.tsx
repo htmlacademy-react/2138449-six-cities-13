@@ -45,7 +45,6 @@ function Comment({offerId}: CommentProps): JSX.Element {
         case RequestStatus.Success:
           setComment('');
           setRating('');
-          //dispatch(dropSendingStatusReview());
           break;
         case RequestStatus.Pending:
           setIsSubmit(true);
