@@ -47,6 +47,4 @@ const getRandomCity = (obj: Record<string, City>) => {
   return obj[randomKey];
 };
 
-const replaceUrl = (url: string) => url.replace(/\/offer\/.*$/, '/offer/');
-
-export { getFormatDate, getDateTime, sortingList, capitalizedString, getRandomCity, replaceUrl };
+export { getFormatDate, getDateTime, sortingList, capitalizedString, getRandomCity };

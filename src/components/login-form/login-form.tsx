@@ -2,6 +2,7 @@ import { useRef, FormEvent } from 'react';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-action';
+import { CLOSE_MESSAGE_DELAY } from '../../const';
 
 function LoginForm(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -17,12 +18,12 @@ function LoginForm(): JSX.Element {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       if (!correctEmail.test(loginRef.current.value)) {
-        toast.warn('Введите корректный Email', {autoClose: 300});
+        toast.warn('Введите корректный Email', {autoClose: CLOSE_MESSAGE_DELAY});
         return;
       }
 
       if (!correctPassword.test(passwordRef.current.value)) {
-        toast.warn('Введите корректный пароль', {autoClose: 300});
+        toast.warn('Введите корректный пароль', {autoClose: CLOSE_MESSAGE_DELAY});
         return;
       }
 

@@ -1,5 +1,7 @@
 import { City } from './types/offers';
 
+export const CLOSE_MESSAGE_DELAY = 300;
+
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
 
