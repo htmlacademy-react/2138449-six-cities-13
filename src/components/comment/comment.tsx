@@ -4,8 +4,8 @@ import { postReview } from '../../store/api-action';
 import { getSendingStatusReview } from '../../store/reviews-data/selectors';
 import { dropSendingStatusReview } from '../../store/reviews-data/reviews-data';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import Rating from './rating';
 import { Offer } from '../../types/offers';
+import Rating from './rating';
 import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus } from '../../const';
 
 type CommentProps = {
@@ -76,7 +76,7 @@ function Comment({offerId}: CommentProps): JSX.Element {
         Your review
       </label>
 
-      <Rating onRatingChange={ratingChangeHandler} disabled={isSubmit} />
+      <Rating onRatingChange={ratingChangeHandler} disabled={isSubmit} ratingValue={rating} />
 
       <textarea
         onChange={textChangeHandler}
