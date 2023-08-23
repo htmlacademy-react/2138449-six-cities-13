@@ -1,23 +1,25 @@
 import { Fragment, ChangeEvent } from 'react';
 
 const ratingMap = {
-  '1': 'terribly',
-  '2': 'badly',
-  '3': 'not bad',
-  '4': 'good',
   '5': 'perfect',
+  '4': 'good',
+  '3': 'not bad',
+  '2': 'badly',
+  '1': 'terribly',
 };
 
 type RatingProps = {
   onRatingChange: (evt: ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
+  ratingValue: string;
 };
 
-function Rating({onRatingChange, disabled}: RatingProps): JSX.Element {
+function Rating({onRatingChange, disabled, ratingValue}: RatingProps): JSX.Element {
 
   return (
     <div className="reviews__rating-form form__rating">
       {Object.entries(ratingMap)
+        .reverse()
         .map(([score, title]) => (
           <Fragment key={score}>
             <input
@@ -28,6 +30,7 @@ function Rating({onRatingChange, disabled}: RatingProps): JSX.Element {
               value={score}
               id={`${score}-stars`}
               type="radio"
+              checked={ratingValue === score}
             />
             <label
               htmlFor={`${score}-stars`}
