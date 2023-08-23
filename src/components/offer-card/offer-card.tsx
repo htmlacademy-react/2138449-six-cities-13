@@ -6,12 +6,12 @@ import BookmarkButton from '../bookmark-button/bookmark-button';
 import { AppRoute } from '../../const';
 import { capitalizedString } from '../../utils';
 
-type OfferProps = Offer & {
+type OfferCardProps = Offer & {
   onCardHover?: (id: string | null) => void;
   favorite?: boolean;
 };
 
-function OfferCard(props: OfferProps): JSX.Element {
+function OfferCard(props: OfferCardProps): JSX.Element {
   const {
     id, title, type, price, previewImage, isPremium,
     rating, isFavorite, onCardHover, favorite = false
@@ -52,8 +52,8 @@ function OfferCard(props: OfferProps): JSX.Element {
             className="place-card__image"
             src={previewImage}
             alt="Place image"
-            width={260}
-            height={200}
+            width={favorite ? 150 : 260}
+            height={favorite ? 110 : 200}
           />
         </Link>
       </div>
