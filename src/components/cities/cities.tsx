@@ -18,13 +18,14 @@ function Cities({offers, activeCity}: CitiesProps) {
   const [currentSort, setCurrenSort] = useState('popular');
 
   const sortByCity = useMemo(
-    () => offers.slice().filter((item) => item.city.name === activeCity.name),
+    () => offers
+      .slice()
+      .filter((item) => item.city.name === activeCity.name),
     [activeCity.name, offers]);
 
   const sortByCategory = useMemo(
     () => sortingList[currentSort](sortByCity),
     [currentSort, sortByCity]);
-
 
   const handleListItemHover = useCallback((id: string | null) => {
     const currentPoint = sortByCity.find((item) => item.id === id);
@@ -51,7 +52,7 @@ function Cities({offers, activeCity}: CitiesProps) {
           />
         </section>
         <div className="cities__right-section">
-          <section className="cities__map">
+          <section className="cities__map map">
             <Map
               city={activeCity}
               points={sortByCity}
