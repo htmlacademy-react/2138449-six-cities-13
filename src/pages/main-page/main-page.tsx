@@ -39,6 +39,7 @@ function MainPage(): JSX.Element {
 
       <div className="page page--gray page--main">
         <Header />
+
         <main className={classNames({
           'page__main page__main--index': true,
           'page__main--index-empty': isEmpty
