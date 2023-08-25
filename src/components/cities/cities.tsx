@@ -56,6 +56,7 @@ function Cities({offers, activeCity}: CitiesProps) {
               city={activeCity}
               points={sortByCity}
               selectedPoint={selectedPoint}
+              detailedOffer={undefined}
             />
           </section>
         </div>

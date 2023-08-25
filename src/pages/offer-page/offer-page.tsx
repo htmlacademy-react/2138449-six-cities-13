@@ -83,11 +83,12 @@ function OfferPage(): JSX.Element {
             </section>
           </div>
         </div>
-        <section className="offer__map">
+        <section className="offer__map map">
           <Map
             city={offer.city}
             points={randomNearbyMap}
             selectedPoint={currentOffer}
+            detailedOffer={offer}
           />
         </section>
       </section>
