@@ -25,6 +25,8 @@ import { getNearbyOffers } from '../../store/nearby-data/selectors';
 import { getFetchingStatusOffer } from '../../store/detailed-offer-data/selectors';
 import { AuthorizationStatus, RequestStatus } from '../../const';
 
+const NEARBY_OFFERS_COUNT = 3;
+
 function OfferPage(): JSX.Element {
   const {id: offerId} = useParams();
 
@@ -36,8 +38,8 @@ function OfferPage(): JSX.Element {
   const reviews = useAppSelector(getReviews);
   const offersNearby = useAppSelector(getNearbyOffers);
   const currentOffer = offers.find(({id}) => id === offerId);
-  const randomNearbyOffers = offersNearby.slice(0, 3);
-  const randomNearbyMap = offersNearby.slice(0, 3);
+  const randomNearbyOffers = offersNearby.slice(0, NEARBY_OFFERS_COUNT);
+  const randomNearbyMap = offersNearby.slice(0, NEARBY_OFFERS_COUNT);
 
   const dispatch = useAppDispatch();
 
