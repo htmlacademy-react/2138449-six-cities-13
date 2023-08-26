@@ -15,13 +15,13 @@ type MapProps = {
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [27, 39],
-  iconAnchor: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
   iconSize: [27, 39],
-  iconAnchor: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 function Map({city, points, selectedPoint, detailedOffer}: MapProps): JSX.Element {
@@ -41,7 +41,7 @@ function Map({city, points, selectedPoint, detailedOffer}: MapProps): JSX.Elemen
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.id === selectedPoint.id
+            selectedPoint && point.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -69,7 +69,7 @@ function Map({city, points, selectedPoint, detailedOffer}: MapProps): JSX.Elemen
   }, [map, points, selectedPoint, detailedOffer, city]);
 
   return (
-    <div style={{ height: '100%', width: '100%'}} ref={mapRef}></div>
+    <div style={{height: '100%', minHeight: '500px', width: '100%', maxWidth: '1144px', margin: '0 auto'}} ref={mapRef}></div>
   );
 }
 
