@@ -4,17 +4,17 @@ import classNames from 'classnames';
 import { OfferCardMemo } from '../offer-card/offer-card';
 
 type OffersListProps = {
-  type: 'cities' | 'near' | 'favorites';
+  type: 'cities' | 'near-places' | 'favorites';
   offers: Offer[];
-  onListItemHover?: (id: string | null) => void;
+  onListItemHover?: (id: string | undefined) => void;
 }
 
 function OffersList({type, offers, onListItemHover}: OffersListProps): JSX.Element {
 
   const offerListClass = classNames({
-    'places__list': true,
-    'cities__places-list tabs__content': type === 'cities',
-    'near-places__list': type === 'near'
+    'cities__places-list places__list tabs__content': type === 'cities',
+    'near-places__list places__list': type === 'near-places',
+    'favorites__places': type === 'favorites',
   });
 
   return (
@@ -22,7 +22,8 @@ function OffersList({type, offers, onListItemHover}: OffersListProps): JSX.Eleme
       {offers.map((offer) => (
         <OfferCardMemo
           key={offer.id}
-          {...offer}
+          offer={offer}
+          type={type}
           onCardHover={onListItemHover}
         />)
       )}

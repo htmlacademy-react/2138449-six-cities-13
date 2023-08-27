@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { FavoritesData, State } from '../../../types/state';
-import { NameSpace } from '../../../const';
+import { FavoritesData, State } from '../../types/state';
+import { NameSpace } from '../../const';
 
 export const getFavorites = createSelector(
   (state: State) => state[NameSpace.Favorites],

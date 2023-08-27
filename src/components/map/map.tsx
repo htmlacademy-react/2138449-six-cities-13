@@ -1,29 +1,30 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
-import { City, Offer } from '../../types/offers';
+import { City, Offer, DetailedOffer } from '../../types/offers';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   city: City;
   points: Offer[];
-  selectedPoint?: Offer;
+  selectedPoint: Offer | undefined;
+  detailedOffer: DetailedOffer | undefined;
 };
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [27, 39],
-  iconAnchor: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
   iconSize: [27, 39],
-  iconAnchor: [27, 39],
+  iconAnchor: [13, 39],
 });
 
-function Map({city, points, selectedPoint}: MapProps): JSX.Element {
+function Map({city, points, selectedPoint, detailedOffer}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -40,11 +41,16 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.id === selectedPoint.id
+            selectedPoint && point.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(markerLayer);
+
+        if (point.location.latitude === detailedOffer?.location.latitude &&
+            point.location.longitude === detailedOffer?.location.longitude) {
+          marker.setIcon(currentCustomIcon);
+        }
       });
 
       map.flyTo(
@@ -60,10 +66,10 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
       };
 
     }
-  }, [map, points, selectedPoint, city]);
+  }, [map, points, selectedPoint, detailedOffer, city]);
 
   return (
-    <div style={{ height: '100%', width: '100%'}} ref={mapRef}></div>
+    <div style={{height: '100%', minHeight: '500px', width: '100%', maxWidth: '1144px', margin: '0 auto'}} ref={mapRef}></div>
   );
 }
 

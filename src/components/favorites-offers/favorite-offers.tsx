@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offers';
 import { OfferCardMemo } from '../offer-card/offer-card';
 
@@ -18,17 +19,17 @@ function FavoritesOffers({offers}: FavoritesOffersProps) {
               <li className="favorites__locations-items" key={keyValue}>
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="#">
+                    <Link className="locations__item-link" to="#">
                       <span>{city}</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="favorites__places">
                   {offersList.map((offer) => (
                     <OfferCardMemo
                       key={offer.id}
-                      {...offer}
-                      favorite
+                      offer={offer}
+                      type='favorites'
                     />)
                   )}
                 </div>

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace, RequestStatus } from '../../../const';
-import { FavoritesData } from '../../../types/state';
-import { fetchFavoritesAction, addFavorite, deleteFavorite } from '../../api-action';
+import { NameSpace, RequestStatus } from '../../const';
+import { FavoritesData } from '../../types/state';
+import { fetchFavoritesAction, addFavorite, deleteFavorite } from '../api-action';
 
 const initialState: FavoritesData = {
   favorites: [],

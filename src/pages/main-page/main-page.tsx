@@ -2,9 +2,8 @@ import { useEffect } from 'react';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getOffers, getActiveCity } from '../../store/offers-data/selectors';
+import { getOffers, getActiveCity, getFetchingStatusOffers } from '../../store/offers-data/selectors';
 import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-action';
-import { getFetchingStatusOffers } from '../../store/offers-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
 import Header from '../../components/header/header';
 import Loader from '../../components/loader/loader';
@@ -40,6 +39,7 @@ function MainPage(): JSX.Element {
 
       <div className="page page--gray page--main">
         <Header />
+
         <main className={classNames({
           'page__main page__main--index': true,
           'page__main--index-empty': isEmpty
