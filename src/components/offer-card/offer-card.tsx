@@ -1,70 +1,74 @@
 import { Link } from 'react-router-dom';
-import { useState, memo } from 'react';
+import { useState, useCallback, memo } from 'react';
 import classNames from 'classnames';
 import { Offer } from '../../types/offers';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import { AppRoute } from '../../const';
 import { capitalizedString } from '../../utils';
 
-type OfferCardProps = Offer & {
-  onCardHover?: (id: string | null) => void;
-  favorite?: boolean;
+type OfferCardProps = {
+  offer: Offer;
+  onCardHover?: (id: string | undefined) => void;
+  type: 'cities' | 'near-places' | 'favorites';
 };
 
-function OfferCard(props: OfferCardProps): JSX.Element {
-  const {
-    id, title, type, price, previewImage, isPremium,
-    rating, isFavorite, onCardHover, favorite = false
-  } = props;
-  const [activeFavorite, setActiveFavorite] = useState(isFavorite);
+function OfferCard({offer, type, onCardHover}: OfferCardProps): JSX.Element {
+  //const { id, title, price, previewImage, isPremium, rating, isFavorite } = offer;
+  const [activeFavorite, setActiveFavorite] = useState(offer.isFavorite);
 
-  const handleCardMouseEnter = () => {
-    onCardHover?.(id);
-  };
+  const handleCardMouseEnter = useCallback(() => {
+    onCardHover?.(offer.id);
+  }, [offer.id, onCardHover]);
 
-  const handleCardMouseLeave = () => {
-    onCardHover?.(null);
-  };
+  const handleCardMouseLeave = useCallback(() => {
+    onCardHover?.(undefined);
+  }, [onCardHover]);
 
   return (
     <article
       className={classNames({
         'place-card': true,
-        'cities__card': !favorite,
-        'favorites__card': favorite
+        'cities__card': type === 'cities',
+        'near-places__card': type === 'near-places',
+        'favorites__card': type === 'favorites',
       })}
       onMouseEnter={handleCardMouseEnter}
       onMouseLeave={handleCardMouseLeave}
     >
-      {isPremium &&
+      {offer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
       <div
         className={classNames({
           'place-card__image-wrapper': true,
-          'cities__image-wrapper': !favorite,
-          'favorites__image-wrapper': favorite
+          'cities__image-wrapper': type === 'cities',
+          'near-places__image-wrapper': type === 'near-places',
+          'favorites__image-wrapper': type === 'favorites',
         })}
       >
-        <Link to={`${AppRoute.Offer}${id}`}>
+        <Link to={`${AppRoute.Offer}${offer.id}`}>
           <img
             className="place-card__image"
-            src={previewImage}
+            src={offer.previewImage}
             alt="Place image"
-            width={favorite ? 150 : 260}
-            height={favorite ? 110 : 200}
+            width={type === 'favorites' ? 150 : 260}
+            height={type === 'favorites' ? 110 : 200}
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={classNames({
+        'place-card__info': true,
+        'favorites__card-info': type === 'favorites',
+      })}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <BookmarkButton
-            id={id}
+            id={offer.id}
             isFavorite={activeFavorite}
             type='place-card'
             onClick={() => setActiveFavorite((prev) => !prev)}
@@ -72,14 +76,16 @@ function OfferCard(props: OfferCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${Math.round(rating) * 100 / 5}%`}} />
+            <span style={{width: `${Math.round(offer.rating) * 100 / 5}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
+          <Link to={`${AppRoute.Offer}${offer.id}`}>
+            {offer.title}
+          </Link>
         </h2>
-        <p className="place-card__type">{capitalizedString(type)}</p>
+        <p className="place-card__type">{capitalizedString(offer.type)}</p>
       </div>
     </article>
   );

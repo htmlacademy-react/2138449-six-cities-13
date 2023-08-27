@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { fetchOfferDetailsAction,
+import {
+  fetchOfferDetailsAction,
   fetchReviewsAction,
   fetchOfferNearbyAction,
   fetchFavoritesAction
@@ -20,32 +22,49 @@ import Map from '../../components/map/map';
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
 import { getDetailedOffer } from '../../store/detailed-offer-data/selectors';
 import { getReviews } from '../../store/reviews-data/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
 import { getNearbyOffers } from '../../store/nearby-data/selectors';
 import { getFetchingStatusOffer } from '../../store/detailed-offer-data/selectors';
 import { AuthorizationStatus, RequestStatus } from '../../const';
+import { Offer } from '../../types/offers';
 
 const NEARBY_OFFERS_COUNT = 3;
 
 function OfferPage(): JSX.Element {
   const {id: offerId} = useParams();
 
+  const offer = useAppSelector(getDetailedOffer);
+  //const offers = useAppSelector(getOffers);
+  const reviews = useAppSelector(getReviews);
+  const offersNearby = useAppSelector(getNearbyOffers);
   const isDataLoading = useAppSelector(getFetchingStatusOffer);
   const isAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const offer = useAppSelector(getDetailedOffer);
-  const offers = useAppSelector(getOffers);
-  const reviews = useAppSelector(getReviews);
-  const offersNearby = useAppSelector(getNearbyOffers);
-  const currentOffer = offers.find(({id}) => id === offerId);
-  const randomNearbyOffers = offersNearby.slice(0, NEARBY_OFFERS_COUNT);
-  const randomNearbyMap = offersNearby.slice(0, NEARBY_OFFERS_COUNT);
-
   const dispatch = useAppDispatch();
 
-  if (currentOffer) {
+  const randomNearbyMap = offersNearby.slice(0, NEARBY_OFFERS_COUNT);
+  const randomNearbyOffers = randomNearbyMap.slice(0, NEARBY_OFFERS_COUNT);
+
+  //const currentOffer = offers.find(({id}) => id === offerId);
+
+  /*if (currentOffer) {
     randomNearbyMap.push(currentOffer);
-  }
+  }*/
+
+  //Проверка гипотезы
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
+    undefined
+  );
+
+  const handleOfferCardHover = useCallback((id: string | undefined) => {
+    if (!id) {
+      setSelectedPoint(undefined);
+    }
+
+    const currentOffer = offersNearby.find((offerNearby) => offerNearby.id === id);
+
+    setSelectedPoint(currentOffer);
+  }, [offersNearby]);
+  //закончили проверку
 
   useEffect(() => {
     if(offerId) {
@@ -55,6 +74,10 @@ function OfferPage(): JSX.Element {
       dispatch(fetchFavoritesAction());
     }
   }, [dispatch, offerId]);
+
+  if (offer) {
+    randomNearbyMap.push(offer);
+  }
 
   if (isDataLoading === RequestStatus.Pending) {
     return (
@@ -89,7 +112,8 @@ function OfferPage(): JSX.Element {
           <Map
             city={offer.city}
             points={randomNearbyMap}
-            selectedPoint={currentOffer}
+            //selectedPoint={currentOffer}
+            selectedPoint={selectedPoint}
             detailedOffer={offer}
           />
         </section>
@@ -98,8 +122,9 @@ function OfferPage(): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <OffersListMemo
-            type='near'
+            type='near-places'
             offers={randomNearbyOffers}
+            onListItemHover={handleOfferCardHover}
           />
         </section>
       </div>

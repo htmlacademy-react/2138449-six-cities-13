@@ -28,8 +28,8 @@ function FavoritesOffers({offers}: FavoritesOffersProps) {
                   {offersList.map((offer) => (
                     <OfferCardMemo
                       key={offer.id}
-                      {...offer}
-                      favorite
+                      offer={offer}
+                      type='favorites'
                     />)
                   )}
                 </div>

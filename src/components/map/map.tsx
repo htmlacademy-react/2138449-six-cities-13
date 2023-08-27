@@ -8,8 +8,8 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: City;
   points: Offer[];
-  selectedPoint?: Offer;
-  detailedOffer?: DetailedOffer;
+  selectedPoint: Offer | undefined;
+  detailedOffer: DetailedOffer | undefined;
 };
 
 const defaultCustomIcon = new Icon({
