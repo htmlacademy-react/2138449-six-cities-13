@@ -33,7 +33,6 @@ function OfferPage(): JSX.Element {
   const {id: offerId} = useParams();
 
   const offer = useAppSelector(getDetailedOffer);
-  //const offers = useAppSelector(getOffers);
   const reviews = useAppSelector(getReviews);
   const offersNearby = useAppSelector(getNearbyOffers);
   const isDataLoading = useAppSelector(getFetchingStatusOffer);
@@ -44,13 +43,6 @@ function OfferPage(): JSX.Element {
   const randomNearbyMap = offersNearby.slice(0, NEARBY_OFFERS_COUNT);
   const randomNearbyOffers = randomNearbyMap.slice(0, NEARBY_OFFERS_COUNT);
 
-  //const currentOffer = offers.find(({id}) => id === offerId);
-
-  /*if (currentOffer) {
-    randomNearbyMap.push(currentOffer);
-  }*/
-
-  //Проверка гипотезы
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
@@ -64,7 +56,6 @@ function OfferPage(): JSX.Element {
 
     setSelectedPoint(currentOffer);
   }, [offersNearby]);
-  //закончили проверку
 
   useEffect(() => {
     if(offerId) {

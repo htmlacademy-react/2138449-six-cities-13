@@ -13,7 +13,6 @@ type OfferCardProps = {
 };
 
 function OfferCard({offer, type, onCardHover}: OfferCardProps): JSX.Element {
-  //const { id, title, price, previewImage, isPremium, rating, isFavorite } = offer;
   const [activeFavorite, setActiveFavorite] = useState(offer.isFavorite);
 
   const handleCardMouseEnter = useCallback(() => {

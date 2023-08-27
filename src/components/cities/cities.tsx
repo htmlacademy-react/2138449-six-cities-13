@@ -28,7 +28,7 @@ function Cities({offers, activeCity}: CitiesProps) {
     () => sortingList[currentSort](sortByCity),
     [currentSort, sortByCity]);
 
-  const handleListItemHover = useCallback((id: string | null) => {
+  const handleListItemHover = useCallback((id: string | undefined) => {
     if (!id) {
       setSelectedPoint(undefined);
     }
