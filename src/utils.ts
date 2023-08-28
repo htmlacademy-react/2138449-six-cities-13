@@ -38,7 +38,7 @@ const sortingList: Record<string, (offers: Offers) => Offers> = {
   top: (offers: Offers) => offers.slice().sort((a: Offer, b: Offer) => b.rating - a.rating),
 };
 
-const capitalizedString = (string: string) =>
+const capitalizeString = (string: string) =>
   `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 
 const getRandomCity = (obj: Record<string, City>) => {
@@ -47,4 +47,4 @@ const getRandomCity = (obj: Record<string, City>) => {
   return obj[randomKey];
 };
 
-export { getFormatDate, getDateTime, sortingList, capitalizedString, getRandomCity };
+export { getFormatDate, getDateTime, sortingList, capitalizeString, getRandomCity };

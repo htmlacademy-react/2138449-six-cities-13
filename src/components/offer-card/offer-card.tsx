@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Offer } from '../../types/offers';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import { AppRoute } from '../../const';
-import { capitalizedString } from '../../utils';
+import { capitalizeString } from '../../utils';
 
 type OfferCardProps = {
   offer: Offer;
@@ -88,7 +88,7 @@ function OfferCard({offer, type, onCardHover}: OfferCardProps): JSX.Element {
             {offer.title}
           </Link>
         </h2>
-        <p className="place-card__type">{capitalizedString(offer.type)}</p>
+        <p className="place-card__type">{capitalizeString(offer.type)}</p>
       </div>
     </article>
   );
