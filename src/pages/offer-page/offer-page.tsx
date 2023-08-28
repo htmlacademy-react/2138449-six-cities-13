@@ -103,7 +103,6 @@ function OfferPage(): JSX.Element {
           <Map
             city={offer.city}
             points={randomNearbyMap}
-            //selectedPoint={currentOffer}
             selectedPoint={selectedPoint}
             detailedOffer={offer}
           />
