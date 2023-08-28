@@ -16,12 +16,16 @@ function OfferCard({offer, type, onCardHover}: OfferCardProps): JSX.Element {
   const [activeFavorite, setActiveFavorite] = useState(offer.isFavorite);
 
   const handleCardMouseEnter = useCallback(() => {
-    onCardHover?.(offer.id);
-  }, [offer.id, onCardHover]);
+    if (type !== 'near-places') {
+      onCardHover?.(offer.id);
+    }
+  }, [offer.id, onCardHover, type]);
 
   const handleCardMouseLeave = useCallback(() => {
-    onCardHover?.(undefined);
-  }, [onCardHover]);
+    if (type !== 'near-places') {
+      onCardHover?.(undefined);
+    }
+  }, [onCardHover, type]);
 
   return (
     <article
