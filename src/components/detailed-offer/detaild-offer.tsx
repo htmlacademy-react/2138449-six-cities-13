@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import { DetailedOffer } from '../../types/offers';
-import { capitalizedString } from '../../utils';
+import { capitalizeString } from '../../utils';
 
 type DetailedOfferProps = {
   offer: DetailedOffer;
@@ -36,7 +36,7 @@ function DetailedOfferPage({offer}: DetailedOfferProps): JSX.Element {
       </div>
       <ul className="offer__features">
         <li className="offer__feature offer__feature--entire">
-          {capitalizedString(offer.type)}
+          {capitalizeString(offer.type)}
         </li>
         <li className="offer__feature offer__feature--bedrooms">{offer.bedrooms} Bedroom{offer.bedrooms > 1 && 's'}</li>
         <li className="offer__feature offer__feature--adults">Max {offer.maxAdults} adult{offer.maxAdults > 1 && 's'}</li>
